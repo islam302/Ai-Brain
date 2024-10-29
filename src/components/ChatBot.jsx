@@ -125,17 +125,47 @@ const ChatPage = () => {
 
   return (
     <div className="chat-page">
+      <form onSubmit={sendMessage} className="chat-input-form">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your question here...."
+          className="chat-input"
+        />
+        <button type="submit" className="send-button">
+          <FiSend />
+        </button>
+        <button
+          type="button"
+          onMouseDown={startListening}
+          className="microphone-button"
+        >
+          <img
+            src="../microphone.png"
+            alt="Microphone"
+            style={{
+              width: "27px",
+              height: "27px",
+            }}
+          />
+        </button>
+      </form>
+      <div className="chat-header">
+        {/* <img src="https://una-oic.org/en/" alt="" /> */}
+        <h1>UNA BOOT</h1>
+        <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
+      </div>
       <div className="chat-container">
-        <div className="chat-header">
-          <h1>يونا شات بوت</h1>
-          <p>مساعدك الشخصي الزكي</p>
-        </div>
-
         <div className="chat-messages">
           {messages.map((msg, index) => (
             <div key={index} className={`chat-message ${msg.sender}`}>
               {msg.sender === "bot" && msg.icon && (
-                <img src={msg.icon} alt="Bot" className="message-avatar" />
+                <img
+                  src="../../robot1.png"
+                  alt="Bot"
+                  className="message-avatar"
+                />
               )}
               <div className="message-text">
                 <TypeAnimation
@@ -160,47 +190,25 @@ const ChatPage = () => {
                   onClick={() => handleSimilarQuestion(msg.id)}
                   className="select-question-button"
                 >
-                  {/* <img src="../question.png" alt="" /> */}
-                  {/* {msg.text} */}
-                  {/* <FiSend /> */}
                   <GiReturnArrow />
                 </button>
               )}
             </div>
           ))}
           {isLoading && (
-            <Sentry style={{ height: "30%", width: "30%", margin: "auto" }} />
-          )}
-        </div>
-
-        <form onSubmit={sendMessage} className="chat-input-form">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your question here...."
-            className="chat-input"
-          />
-          <button type="submit" className="send-button">
-            <FiSend />
-          </button>
-          <button
-            type="button"
-            onMouseDown={startListening}
-            className="microphone-button"
-          >
-            <img
-              src="../microphone.png"
-              alt="Microphone"
+            <Bounce
               style={{
-                width: "27px",
-                height: "27px",
+                color: "#129376",
+                // backgroundColor: "white",
+                height: "60%",
+                width: "60%",
+                // margin: "auto",
               }}
             />
-          </button>
-        </form>
+          )}
+        </div>
       </div>
-      <img src="../robot2.png" alt="" className="robot-container" />
+      <img src="../rob.png" alt="" className="robot-container" />
     </div>
   );
 };
