@@ -10,12 +10,16 @@ import "./ChatBot.css";
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const messagesEndRef = useRef(null); // Reference for scrolling
+  const messagesEndRef = useRef(null);
 
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const addLinkTargetAttribute = (html) => {
+    return html.replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ');
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -27,7 +31,6 @@ const ChatPage = () => {
 
     try {
       const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: input });
-
       const updatedMessages = [...newMessages];
 
       // Handle similar questions
@@ -41,20 +44,23 @@ const ChatPage = () => {
           icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
         });
 
+        // إضافة الأزرار فقط للأسئلة المشابهة بدون إضافة نص الرسالة
         response.data.similar_questions.forEach((q) => {
           updatedMessages.push({
-            text: q.question,
             sender: "bot",
             id: q.id,
+            text: q.question, // هذا هو النص الذي يظهر على الزر فقط
             isButton: true,
+            isHtml: false,
           });
         });
+
       } else if (response.data.answer) {
         updatedMessages.push({
-          text: response.data.answer,
+          text: addLinkTargetAttribute(response.data.answer),
           sender: "bot",
           icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
-          isHtml: true, // Mark it as HTML
+          isHtml: true,
         });
       } else {
         updatedMessages.push({
@@ -79,23 +85,28 @@ const ChatPage = () => {
   };
 
   const handleSimilarQuestion = async (id) => {
+    // ابحث عن السؤال المشابه باستخدام ID
     const similarQuestion = messages.find((msg) => msg.id === id);
     if (!similarQuestion) return;
 
     try {
-      const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: similarQuestion.text });
+      const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", {
+        question: similarQuestion.text,
+      });
 
+      // إضافة الرسالة الجديدة كمحادثة من المستخدم
       const newMessages = [
         ...messages,
         { text: similarQuestion.text, sender: "user" },
       ];
 
+      // تحقق من وجود إجابة وتحديث الرسائل
       if (response.data && response.data.answer) {
         newMessages.push({
           text: response.data.answer,
           sender: "bot",
           icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
-          isHtml: true, // Mark as HTML for rendering
+          isHtml: true, // تعيين النوع كـ HTML لعرض الروابط
         });
       } else {
         newMessages.push({
@@ -137,7 +148,7 @@ const ChatPage = () => {
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setInput(transcript);
-      sendMessage(new Event("submit")); // Automatically send the message
+      sendMessage(new Event("submit"));
     };
 
     recognition.onerror = (event) => {
@@ -157,7 +168,7 @@ const ChatPage = () => {
               onChange={(e) => setInput(e.target.value)}
               placeholder="...اكتب سؤالك هنا"
               className="chat-input"
-              style={{textAlign: "right"}} // محاذاة النص إلى اليمين
+              style={{textAlign: "right"}}
           />
           <button type="submit" className="send-button">
             <FiSend/>
@@ -177,43 +188,42 @@ const ChatPage = () => {
             />
           </button>
         </form>
-
         <div className="chat-header">
           <h1>UNA BOOT</h1>
           <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
         </div>
-
         <div className="chat-container">
           <div className="chat-messages">
             {messages.map((msg, index) => (
                 <div key={index} className={`chat-message ${msg.sender}`}>
-                <div className="message-text">
-                  {msg.isHtml ? (
-                    <div>{HTMLParser(msg.text)}</div>
-                  ) : (
-                    <TypeAnimation
-                      sequence={[msg.text, () => {}]} // Optional: Handle typing complete
-                      speed={70}
-                      repeat={0}
-                      wrapper="div"
-                    />
+                  <div className="message-text">
+                    {msg.isHtml ? (
+                        <div>{HTMLParser(msg.text)}</div>
+                    ) : msg.isButton ? null : ( // لا يتم عرض النص كرسالة إذا كان msg.isButton صحيحاً
+                        <TypeAnimation
+                            sequence={[msg.text, () => {}]}
+                            speed={70}
+                            repeat={0}
+                            wrapper="div"
+                        />
+                    )}
+                  </div>
+                  {msg.sender === "bot" && msg.isButton && (
+                      <button
+                          onClick={() => handleSimilarQuestion(msg.id)}
+                          className="similar-question-button"
+                      >
+                        <GiReturnArrow/> {msg.text}
+                      </button>
                   )}
                 </div>
-                {msg.sender === "bot" && msg.isButton && (
-                  <button
-                    onClick={() => handleSimilarQuestion(msg.id)}
-                    className="select-question-button"
-                  >
-                    <GiReturnArrow />
-                  </button>
-                )}
-              </div>
             ))}
-            {/* Scrollable reference at the end */}
-            <div ref={messagesEndRef} />
+
+            <div ref={messagesEndRef}/>
           </div>
         </div>
-        <img src="../rob.png" alt="" className="robot-container" />
+
+        <img src="../rob.png" alt="" className="robot-container"/>
       </div>
     </AnimatedBackground>
   );
