@@ -17,6 +17,11 @@ const ChatPage = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+        document.title = "UNA BOOT";
+    }, []);
+
+
   const addLinkTargetAttribute = (html) => {
     return html.replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ');
   };
