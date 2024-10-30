@@ -10,7 +10,6 @@ import "./ChatBot.css";
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null); // Reference for scrolling
 
   // Scroll to bottom when messages change
@@ -25,7 +24,6 @@ const ChatPage = () => {
     const newMessages = [...messages, { text: input, sender: "user" }];
     setMessages(newMessages);
     setInput("");
-    setIsLoading(true);
 
     try {
       const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: input });
@@ -38,7 +36,7 @@ const ChatPage = () => {
         response.data.similar_questions.length > 0
       ) {
         updatedMessages.push({
-          text: "هل تقصد:",
+          text: ":هل تقصد",
           sender: "bot",
           icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
         });
@@ -78,15 +76,11 @@ const ChatPage = () => {
         },
       ]);
     }
-
-    setIsLoading(false);
   };
 
   const handleSimilarQuestion = async (id) => {
     const similarQuestion = messages.find((msg) => msg.id === id);
     if (!similarQuestion) return;
-
-    setIsLoading(true);
 
     try {
       const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: similarQuestion.text });
@@ -123,8 +117,6 @@ const ChatPage = () => {
         },
       ]);
     }
-
-    setIsLoading(false);
   };
 
   const startListening = () => {
@@ -155,46 +147,46 @@ const ChatPage = () => {
     recognition.start();
   };
 
-
   return (
     <AnimatedBackground>
       <div className="chat-page">
         <form onSubmit={sendMessage} className="chat-input-form">
           <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="اكتب سؤالك هنا..."
-            className="chat-input"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="...اكتب سؤالك هنا"
+              className="chat-input"
+              style={{textAlign: "right"}} // محاذاة النص إلى اليمين
           />
           <button type="submit" className="send-button">
-            <FiSend />
+            <FiSend/>
           </button>
           <button
-            type="button"
-            onMouseDown={startListening}
-            className="microphone-button"
+              type="button"
+              onMouseDown={startListening}
+              className="microphone-button"
           >
             <img
-              src="../microphone.png"
-              alt="ميكروفون"
-              style={{
-                width: "27px",
-                height: "27px",
-              }}
+                src="../microphone.png"
+                alt="ميكروفون"
+                style={{
+                  width: "27px",
+                  height: "27px",
+                }}
             />
           </button>
         </form>
 
         <div className="chat-header">
-          <h1>UNA BOT</h1>
+          <h1>UNA BOOT</h1>
           <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
         </div>
 
         <div className="chat-container">
           <div className="chat-messages">
             {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.sender}`}>
+                <div key={index} className={`chat-message ${msg.sender}`}>
                 <div className="message-text">
                   {msg.isHtml ? (
                     <div>{HTMLParser(msg.text)}</div>
