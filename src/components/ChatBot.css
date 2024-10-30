@@ -16,7 +16,10 @@ body {
   /* align-items: center; */
   height: 100vh;
   /* background: linear-gradient(90deg, #5f1010, #129376, #129376, #5f1010); */
-  background-image: url("../../public/bg.jpg");
+  /* background-image: url("../../public/bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
 }
 @keyframes upDown {
   0%,
@@ -45,6 +48,10 @@ body {
     display: none;
   }
 }
+.index-module_type__E-SaG::after {
+  content: "";
+  display: none; /* Hides the cursor */
+}
 
 .chat-container {
   background: transparent;
@@ -53,9 +60,6 @@ body {
   height: 60%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Enable vertical scrolling */
-  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
 }
 
 /* Media query for mobile view */
@@ -65,24 +69,14 @@ body {
   }
 }
 
-/* Hide scrollbar for WebKit browsers */
-.chat-container::-webkit-scrollbar {
-  display: none;
-}
-
 .chat-header {
   height: 25%;
   position: absolute;
   width: 100%;
   height: 14%;
   top: 0;
-  background: #129376;
   color: white;
-  /* padding: 5px; */
   text-align: center;
-  /* border-top-left-radius: 14px;
-  border-top-right-radius: 14px; */
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
 }
 
 .chat-messages {
@@ -116,8 +110,8 @@ body {
 }
 
 .chat-message.user .message-text {
-  background-color: #129376;
-  color: white;
+  background-color: #f1f1f1;
+  color: #333;
   border-radius: 15px 15px 0 15px;
   padding: 12px;
 }
@@ -150,12 +144,12 @@ body {
 .chat-input-form {
   display: flex;
   position: absolute;
-  bottom: 10px;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 75%;
   padding: 15px;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
   background: #129376;
   border-radius: 15px;
   overflow: hidden;
@@ -170,6 +164,7 @@ body {
 
 .chat-input {
   flex: 1;
+  background-color: #f1f1f1;
   padding: 12px 20px;
   border: none;
   border-radius: 30px;
@@ -191,13 +186,12 @@ body {
   font-size: 1.5rem;
   margin-left: 10px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .send-button:hover {
   background-color: #129376;
-  /* background-color: #005bb5; */
   transform: scale(1.05);
 }
 

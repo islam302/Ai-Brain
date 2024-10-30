@@ -1,18 +1,22 @@
-import { GiReturnArrow } from "react-icons/gi";
-import { Bounce, Dots, Sentry } from "react-activity";
-import "react-activity/dist/library.css";
-import { TypeAnimation } from "react-type-animation";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { FiSend } from "react-icons/fi";
+import { GiReturnArrow } from "react-icons/gi";
+import HTMLParser from 'html-react-parser';
+import { TypeAnimation } from "react-type-animation";
+import AnimatedBackground from "./AnimatedBg";
 import "./ChatBot.css";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [hasSimilarQuestions, setHasSimilarQuestions] = useState(false); // Track if similar questions are shown
+  const messagesEndRef = useRef(null); // Reference for scrolling
+
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -20,68 +24,55 @@ const ChatPage = () => {
 
     const newMessages = [...messages, { text: input, sender: "user" }];
     setMessages(newMessages);
-    setIsLoading(true);
     setInput("");
+    setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://unachatbot.onrender.com/ask_questions/",
-        { question: input }
-      );
+      const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: input });
 
-      if (response.data) {
-        // Clear the similar question message if it exists before adding new ones
-        const updatedMessages = newMessages.filter(
-          (msg) => msg.text !== "Do you mean:"
-        );
+      const updatedMessages = [...newMessages];
 
-        // Check if similar questions are not already shown
-        if (
-          response.data.similar_questions &&
-          response.data.similar_questions.length > 0 &&
-          !hasSimilarQuestions
-        ) {
-          // Add the "Do you mean:" message
+      // Handle similar questions
+      if (
+        response.data.similar_questions &&
+        response.data.similar_questions.length > 0
+      ) {
+        updatedMessages.push({
+          text: "هل تقصد:",
+          sender: "bot",
+          icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+        });
+
+        response.data.similar_questions.forEach((q) => {
           updatedMessages.push({
-            text: "Do you mean:",
+            text: q.question,
             sender: "bot",
-            icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+            id: q.id,
+            isButton: true,
           });
-
-          // Add each similar question as a button
-          response.data.similar_questions.forEach((q) => {
-            updatedMessages.push({
-              text: q.question,
-              sender: "bot",
-              id: q.id,
-              isButton: true, // Ensure isButton is added
-            });
-          });
-
-          setHasSimilarQuestions(true); // Mark similar questions as shown
-        } else if (response.data.answer) {
-          updatedMessages.push({
-            text: response.data.answer,
-            sender: "bot",
-            icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
-            isHtml: true,
-          });
-        } else {
-          updatedMessages.push({
-            text: "?????? ?? ???? ????? ????.",
-            sender: "bot",
-            icon: "https://i.postimg.cc/wB80F6Z9/chatbot.png",
-          });
-        }
-
-        setMessages(updatedMessages); // Update the messages state once
+        });
+      } else if (response.data.answer) {
+        updatedMessages.push({
+          text: response.data.answer,
+          sender: "bot",
+          icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+          isHtml: true, // Mark it as HTML
+        });
+      } else {
+        updatedMessages.push({
+          text: "آسف، لم أتمكن من العثور على الإجابة.",
+          sender: "bot",
+          icon: "https://i.postimg.cc/wB80F6Z9/chatbot.png",
+        });
       }
+
+      setMessages(updatedMessages);
     } catch (error) {
       console.error("Error sending message:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          text: "??? ??? ?? ??????? ?? ??????. ???? ???????? ??? ????.",
+          text: "حدث خطأ أثناء معالجة سؤالك. يرجى المحاولة مرة أخرى.",
           sender: "bot",
           icon: "https://i.postimg.cc/wB80F6Z9/chatbot.png",
         },
@@ -91,125 +82,148 @@ const ChatPage = () => {
     setIsLoading(false);
   };
 
-  const handleSimilarQuestion = (id) => {
-    console.log(`?? ?????? ?????? ID: ${id}`);
-    // You can add logic to handle the selected question
+  const handleSimilarQuestion = async (id) => {
+    const similarQuestion = messages.find((msg) => msg.id === id);
+    if (!similarQuestion) return;
+
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", { question: similarQuestion.text });
+
+      const newMessages = [
+        ...messages,
+        { text: similarQuestion.text, sender: "user" },
+      ];
+
+      if (response.data && response.data.answer) {
+        newMessages.push({
+          text: response.data.answer,
+          sender: "bot",
+          icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+          isHtml: true, // Mark as HTML for rendering
+        });
+      } else {
+        newMessages.push({
+          text: "عذرًا، لم أتمكن من العثور على إجابة لهذا السؤال.",
+          sender: "bot",
+          icon: "https://i.postimg.cc/wB80F6Z9/chatbot.png",
+        });
+      }
+
+      setMessages(newMessages);
+    } catch (error) {
+      console.error("حدث خطأ أثناء إرسال السؤال:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          text: "حدث خطأ أثناء معالجة سؤالك. يرجى المحاولة مرة أخرى.",
+          sender: "bot",
+          icon: "https://i.postimg.cc/wB80F6Z9/chatbot.png",
+        },
+      ]);
+    }
+
+    setIsLoading(false);
   };
 
   const startListening = () => {
-    const recognition = new (window.SpeechRecognition ||
-      window.webkitSpeechRecognition)();
-    recognition.interimResults = false;
-    recognition.lang = "ar";
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
 
     recognition.onstart = () => {
-      console.log("Listening for voice input...");
+      console.log("Voice recognition started. Speak into the microphone.");
     };
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setInput(transcript);
-      sendMessage({ preventDefault: () => {} });
+      sendMessage(new Event("submit")); // Automatically send the message
     };
 
     recognition.onerror = (event) => {
       console.error("Error occurred in recognition: " + event.error);
     };
 
-    recognition.onend = () => {
-      console.log("Stopped listening.");
-    };
-
     recognition.start();
   };
 
+
   return (
-    <div className="chat-page">
-      <form onSubmit={sendMessage} className="chat-input-form">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your question here...."
-          className="chat-input"
-        />
-        <button type="submit" className="send-button">
-          <FiSend />
-        </button>
-        <button
-          type="button"
-          onMouseDown={startListening}
-          className="microphone-button"
-        >
-          <img
-            src="../microphone.png"
-            alt="Microphone"
-            style={{
-              width: "27px",
-              height: "27px",
-            }}
+    <AnimatedBackground>
+      <div className="chat-page">
+        <form onSubmit={sendMessage} className="chat-input-form">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="اكتب سؤالك هنا..."
+            className="chat-input"
           />
-        </button>
-      </form>
-      <div className="chat-header">
-        {/* <img src="https://una-oic.org/en/" alt="" /> */}
-        <h1>UNA BOOT</h1>
-        <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
-      </div>
-      <div className="chat-container">
-        <div className="chat-messages">
-          {messages.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.sender}`}>
-              {msg.sender === "bot" && msg.icon && (
-                <img
-                  src="../../robot1.png"
-                  alt="Bot"
-                  className="message-avatar"
-                />
-              )}
-              <div className="message-text">
-                <TypeAnimation
-                  sequence={[msg.text, () => setIsTypingComplete(true)]}
-                  speed={50}
-                  repeat={0}
-                  wrapper="div"
-                  cursor={!isTypingComplete}
-                  render={() => (
-                    <div
-                      style={{ fontFamily: "Tajawal, sans-serif" }}
-                      className="message-text"
-                      {...(msg.isHtml
-                        ? { dangerouslySetInnerHTML: { __html: msg.text } }
-                        : { children: msg.text })}
-                    ></div>
-                  )}
-                />
-              </div>
-              {msg.sender === "bot" && msg.isButton && (
-                <button
-                  onClick={() => handleSimilarQuestion(msg.id)}
-                  className="select-question-button"
-                >
-                  <GiReturnArrow />
-                </button>
-              )}
-            </div>
-          ))}
-          {isLoading && (
-            <Bounce
+          <button type="submit" className="send-button">
+            <FiSend />
+          </button>
+          <button
+            type="button"
+            onMouseDown={startListening}
+            className="microphone-button"
+          >
+            <img
+              src="../microphone.png"
+              alt="ميكروفون"
               style={{
-                color: "#129376",
-                // backgroundColor: "white",
-                height: "60%",
-                width: "60%",
-                // margin: "auto",
+                width: "27px",
+                height: "27px",
               }}
             />
-          )}
+          </button>
+        </form>
+
+        <div className="chat-header">
+          <h1>UNA BOT</h1>
+          <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
         </div>
+
+        <div className="chat-container">
+          <div className="chat-messages">
+            {messages.map((msg, index) => (
+              <div key={index} className={`chat-message ${msg.sender}`}>
+                <div className="message-text">
+                  {msg.isHtml ? (
+                    <div>{HTMLParser(msg.text)}</div>
+                  ) : (
+                    <TypeAnimation
+                      sequence={[msg.text, () => {}]} // Optional: Handle typing complete
+                      speed={70}
+                      repeat={0}
+                      wrapper="div"
+                    />
+                  )}
+                </div>
+                {msg.sender === "bot" && msg.isButton && (
+                  <button
+                    onClick={() => handleSimilarQuestion(msg.id)}
+                    className="select-question-button"
+                  >
+                    <GiReturnArrow />
+                  </button>
+                )}
+              </div>
+            ))}
+            {/* Scrollable reference at the end */}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+        <img src="../rob.png" alt="" className="robot-container" />
       </div>
-      <img src="../rob.png" alt="" className="robot-container" />
-    </div>
+    </AnimatedBackground>
   );
 };
 
