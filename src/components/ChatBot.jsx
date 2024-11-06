@@ -32,7 +32,7 @@ const ChatPage = () => {
     setMessages(newMessages);
     setInput("");
 
-    const apiUrl = useUnaApi ? "https://unachatbot.onrender.com/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
+    const apiUrl = useUnaApi ? "https://news-llm-generator.onrender.com/llm/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
 
     try {
       const response = await axios.post(apiUrl, { question: input });
