@@ -16,7 +16,6 @@ body {
   background-size: cover; /* Ensures the image covers the entire area */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
-
 }
 
 @keyframes upDown {
@@ -59,7 +58,7 @@ body {
   height: 60%;
   display: flex;
   flex-direction: column;
-  flex: 1; /* ????? ??????? ??????? ??? ?????? ??????? */
+  flex: 1; /* سيشغل المساحة المتاحة بين الهيدر والفوتر */
 }
 
 /* Media query for mobile view */
@@ -144,8 +143,9 @@ body {
   padding: 12px;
   margin: 5px;
   animation: fadeIn 0.4s ease-in-out;
-  text-align: right; /* Aligns text to the right */
-  direction: rtl; /* Ensures punctuation and text flow correctly for Arabic */
+  text-align: right; /* لا يزال النص محاذي لليمين بالنسبة للغة العربية */
+  direction: rtl; /* النص يتجه من اليمين لليسار */
+  margin-right: 400px; /* إضافة المسافة على اليسار لجعل الرد يتحرك قليلاً لليسار */
 }
 
 .chat-message.user .message-text {
@@ -153,11 +153,13 @@ body {
   font-size: 1.1rem;
   background-color: #00573a;
   color: #fff;
-  border-radius: 15px; /* Adjust border-radius for both sides */
+  border-radius: 15px;
   padding: 12px;
-  margin: 5px; /* Add some margin around messages */
+  margin: 5px;
   animation: fadeIn 0.4s ease-in-out;
+  margin-right: 400px; /* إضافة المسافة على اليسار لجعل الرد يتحرك قليلاً لليسار */
 }
+
 
 .similar-question-button {
     background-color: #99e3ca;
@@ -284,21 +286,37 @@ body {
   padding: 20px 0;
   text-align: center;
   bottom: -25px;
-  margin-top: auto; /* ???? ?????? ?????? ?? ?????? */
+  margin-top: auto; /* يجعل الفوتر دائمًا في الأسفل */
 }
 
 .social-links {
-  margin-top: 10px;
+  font-size: 24px; /* تحديد حجم الأيقونات */
+  color: #007bff; /* تحديد اللون */
+  margin: 0 10px; /* إضافة مسافة بين الأيقونات */
 }
 
 .social-links a {
   margin: 0 10px;
+  color: inherit; /* ضمان أن الأيقونة تأخذ لون العنصر الأب */
+  text-decoration: none; /* إزالة الخط تحت الرابط */
 }
 
+.social-links a:hover {
+  color: #007057; /* تغيير اللون عند التمرير */
+}
+
+.social-links a:hover {
+  color: #007057;
+}
+
+
+/* في حال كنت تستخدم الصور بدلاً من FontAwesome */
 .social-links img {
   width: 30px;
   height: 30px;
+  border-radius: 50%; /* إذا كنت ترغب في جعل الصور دائرية */
 }
+
 
 
 @keyframes fadeIn {
