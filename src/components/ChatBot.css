@@ -104,6 +104,7 @@ body {
   justify-content: flex-end;
   transition: transform 0.3s ease-in-out;
   margin-bottom: 10px;
+
 }
 
 .chat-message.user {
@@ -135,7 +136,8 @@ body {
 }
 
 .chat-message.bot .message-text {
-  max-width: 70%;
+  max-width: 40%;
+  min-width: 100px; /* عرض أدنى يمنع تكوين دائرة صغيرة */
   font-size: 1.1rem;
   background-color: #f1f1f1;
   color: #333;
@@ -143,9 +145,14 @@ body {
   padding: 12px;
   margin: 5px;
   animation: fadeIn 0.4s ease-in-out;
-  text-align: right; /* لا يزال النص محاذي لليمين بالنسبة للغة العربية */
-  direction: rtl; /* النص يتجه من اليمين لليسار */
-  margin-right: 400px; /* إضافة المسافة على اليسار لجعل الرد يتحرك قليلاً لليسار */
+  text-align: right;
+  direction: rtl;
+  margin-right: 400px;
+  visibility: hidden; /* إخفاء الرسالة في البداية */
+}
+
+.chat-message.bot .message-text:not(:empty) {
+  visibility: visible; /* إظهار الرسالة إذا كانت تحتوي على محتوى */
 }
 
 .chat-message.user .message-text {
@@ -160,7 +167,6 @@ body {
   margin-right: 400px; /* إضافة المسافة على اليسار لجعل الرد يتحرك قليلاً لليسار */
 }
 
-
 .similar-question-button {
     background-color: #99e3ca;
     border: none;
@@ -173,6 +179,7 @@ body {
     animation: fadeIn 0.4s ease-in-out;
     display: block; /* ???? ?? ?? ???? ???? ????? ????? */
     text-align: center; /* ?????? ???? ?? ????? */
+    margin-right: 400px; /* إضافة المسافة على اليسار لجعل الرد يتحرك قليلاً لليسار */
 }
 
 .similar-question-button:hover {
@@ -286,37 +293,21 @@ body {
   padding: 20px 0;
   text-align: center;
   bottom: -25px;
-  margin-top: auto; /* يجعل الفوتر دائمًا في الأسفل */
+  margin-top: auto;
 }
 
 .social-links {
-  font-size: 24px; /* تحديد حجم الأيقونات */
-  color: #007bff; /* تحديد اللون */
-  margin: 0 10px; /* إضافة مسافة بين الأيقونات */
+  margin-top: 10px;
 }
 
 .social-links a {
   margin: 0 10px;
-  color: inherit; /* ضمان أن الأيقونة تأخذ لون العنصر الأب */
-  text-decoration: none; /* إزالة الخط تحت الرابط */
 }
 
-.social-links a:hover {
-  color: #007057; /* تغيير اللون عند التمرير */
-}
-
-.social-links a:hover {
-  color: #007057;
-}
-
-
-/* في حال كنت تستخدم الصور بدلاً من FontAwesome */
 .social-links img {
   width: 30px;
   height: 30px;
-  border-radius: 50%; /* إذا كنت ترغب في جعل الصور دائرية */
 }
-
 
 
 @keyframes fadeIn {

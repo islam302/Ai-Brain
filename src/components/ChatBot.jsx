@@ -271,25 +271,25 @@ const ChatPage = () => {
         </div>
         <img src="../rob.png" alt="" className="robot-container"/>
 
-          <div className="footer">
-              <p>© حقوق الطبع والنشر 2024 <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer"
-                                             style={{color: 'blue'}}>UNA.OIC.ORG</a> جميع الحقوق محفوظة لصالح</p>
-              <div className="social-links">
-                  <a href="https://www.whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S" target="_blank"
-                     rel="noopener noreferrer">
-                      <i className="fab fa-whatsapp"></i>
-                  </a>
-                  <a href="https://x.com/UNAOIC" target="_blank" rel="noopener noreferrer">
-                      <i className="fab fa-twitter"></i>
-                  </a>
-                  <a href="https://www.facebook.com/unaoic" target="_blank" rel="noopener noreferrer">
-                      <i className="fab fa-facebook"></i>
-                  </a>
-                  <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer">
-                      <i className="fas fa-globe"></i>
-                  </a>
-              </div>
+        <div className="footer">
+          <p>© حقوق الطبع والنشر 2024 <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer"
+                                         style={{color: 'blue'}}>UNA.OIC.ORG</a> جميع الحقوق محفوظة لصالح</p>
+          <div className="social-links">
+            <a href="https://www.whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S" target="_blank"
+               rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/15713/15713434.png" alt=""/>
+            </a>
+            <a href="https://x.com/UNAOIC" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968830.png" alt=""/>
+            </a>
+            <a href="https://www.facebook.com/unaoic" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt=""/>
+            </a>
+            <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/1006/1006771.png" alt=""/>
+            </a>
           </div>
+        </div>
 
       </div>
   );
