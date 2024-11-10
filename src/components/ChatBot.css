@@ -12,10 +12,11 @@ body {
 .chat-page {
   display: flex;
   height: 100vh;
-  background-image: url('background.jpg'); /* Adjust the path as necessary */
+  background-image: url('./images/background.jpg'); /* Adjust the path as necessary */
   background-size: cover; /* Ensures the image covers the entire area */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
+
 }
 
 @keyframes upDown {
@@ -30,7 +31,7 @@ body {
 
 .robot-container {
   position: absolute;
-  top: 0%;
+  top: 2%;
   transform: translateY(-50%);
   right: 33%;
   transform: translateX(50%);
@@ -58,6 +59,7 @@ body {
   height: 60%;
   display: flex;
   flex-direction: column;
+  flex: 1; /* ????? ??????? ??????? ??? ?????? ??????? */
 }
 
 /* Media query for mobile view */
@@ -72,9 +74,8 @@ body {
   position: absolute;
   width: 100%;
   height: 14%;
-  top: 0;
+  top:20px;
   color: white;
-  background: #07755d;
   text-align: center;
 }
 
@@ -143,6 +144,8 @@ body {
   padding: 12px;
   margin: 5px;
   animation: fadeIn 0.4s ease-in-out;
+  text-align: right; /* Aligns text to the right */
+  direction: rtl; /* Ensures punctuation and text flow correctly for Arabic */
 }
 
 .chat-message.user .message-text {
@@ -175,23 +178,25 @@ body {
 }
 
 .una-news-button {
-    background-color: #006400; /* ??? ????? ???? */
-    color: white; /* ??? ???? */
-    border: none; /* ????? ?????? */
-    border-radius: 5px; /* ????? ?????? */
-    padding: 10px 15px; /* ????? ?????? */
-    font-size: 16px; /* ??? ???? */
-    cursor: pointer; /* ???? ???? ??? ??????? ??? ???? */
-    margin-left: 10px; /* ????? ??? ??????? */
-    transition: background-color 0.3s; /* ????? ?????? ??? ??????? */
+    background-color: #086b55;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    height: 50px;
+    margin-left: 10px;
+    margin-top: 15px;
+    transition: background-color 0.3s;
 }
 
 .una-news-button:hover {
-    background-color: #004d00; /* ??? ????? ???? ??? ??????? */
+    background-color: #053b2f; /* ??? ????? ???? ??? ??????? */
 }
 
 .una-news-button.pressed {
-    background-color: #004d00; /* ??? ????? ???? ??? ????? */
+    background-color: #053b2f; /* ??? ????? ???? ??? ????? */
 }
 
 .chat-input-form {
@@ -199,13 +204,13 @@ body {
   position: absolute;
   bottom: 5%;
   left: 50%;
+  top: 77%;
   transform: translateX(-50%);
   width: 75%;
   border-radius: 15px;
   overflow: hidden;
 }
 
-/* Media query for mobile view */
 @media (max-width: 768px) {
   .chat-input-form {
     width: 90%;
@@ -215,11 +220,12 @@ body {
 .chat-input {
   flex: 1;
   background-color: #f1f1f1;
-  padding: 12px 20px;
+  padding: 16px 24px; /* Increased padding for a larger input area */
   border: none;
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: 1.2rem; /* Increased font size */
   outline: none;
+  height: 80px; /* Increased height */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -229,6 +235,7 @@ body {
   color: white;
   border-radius: 50%;
   width: 45px;
+  margin-top: 15px;
   height: 45px;
   display: flex;
   align-items: center;
@@ -240,7 +247,7 @@ body {
 }
 
 .send-button:hover {
-  background-color: #129376;
+  background-color: #053b2f;
   transform: scale(1.05);
 }
 
@@ -252,6 +259,7 @@ body {
   width: 45px;
   height: 45px;
   display: flex;
+  margin-top: 15px;
   align-items: center;
   justify-content: center;
   margin-left: 10px;
@@ -260,7 +268,7 @@ body {
 }
 
 .microphone-button:hover {
-  background-color: #129376;
+  background-color: #053b2f;
   transform: scale(1.05);
 }
 
@@ -268,6 +276,30 @@ body {
   transform: scale(0.95);
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+.footer {
+  position: fixed;
+  width: 100%;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+  bottom: -13px;
+  margin-top: auto; /* ???? ?????? ?????? ?? ?????? */
+}
+
+.social-links {
+  margin-top: 10px;
+}
+
+.social-links a {
+  margin: 0 10px;
+}
+
+.social-links img {
+  width: 30px;
+  height: 30px;
+}
+
 
 @keyframes fadeIn {
   from {

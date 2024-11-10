@@ -32,7 +32,7 @@ const ChatPage = () => {
     setMessages(newMessages);
     setInput("");
 
-    const apiUrl = useUnaApi ? "https://unachatbot.onrender.com/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
+    const apiUrl = useUnaApi ? "http://127.0.0.1:8000/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
 
     try {
       const response = await axios.post(apiUrl, { question: input });
@@ -44,13 +44,20 @@ const ChatPage = () => {
           response.data.answer.forEach((answer) => {
             updatedMessages.push({
               text: `
-                <div>
-                  <h3>${answer.title}</h3>
-                  <p>${answer.content}</p>
-                  <a href="${answer.link}" target="_blank" rel="noopener noreferrer">اقرأ المزيد</a>
-                  <br>
-                  <img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px;">
+                <div style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
+                    
+                    <p style="color: #666; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
+                    
+                    <h3 style="font-size: 18px; color: #333; margin-top: 10px;">${answer.title}</h3>
+                    
+                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
+                    
+                    <a href="${answer.link}" target="_blank" rel="noopener noreferrer" style="background-color: #07755d; color: white; padding: 8px 16px; text-decoration: none; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; text-align: center;">
+                        أكمل القراءة
+                    </a>
                 </div>
+
               `,
               sender: "bot",
               icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
@@ -221,11 +228,7 @@ const ChatPage = () => {
           <button
               type="button"
               onClick={handleNewsButtonClick}
-              className={`news-button una-news-button ${useUnaApi ? 'pressed' : ''}`}
-              style={{
-                backgroundColor: useUnaApi ? "#023f31" : "#07755DFF", // لون مختلف حسب الحالة
-                color: useUnaApi ? "#ffffff" : "#ffffff", // لون نص مختلف
-              }}
+              className={`una-news-button ${useUnaApi ? 'pressed' : ''}`}
           >
             اخبار من يونا
           </button>
@@ -239,32 +242,54 @@ const ChatPage = () => {
           <div className="chat-messages">
             {messages.map((msg, index) => (
                 <div key={index} className={`chat-message ${msg.sender}`}>
-                <div className="message-text">
-                  {msg.isHtml ? (
-                    <div>{HTMLParser(msg.text)}</div>
-                  ) : msg.isButton ? null : (
-                    <TypeAnimation
-                      sequence={[msg.text, () => {}]}
-                      speed={70}
-                      repeat={0}
-                      wrapper="div"
-                    />
+                  <div className="message-text">
+                    {msg.isHtml ? (
+                        <div>{HTMLParser(msg.text)}</div>
+                    ) : msg.isButton ? null : (
+                        <TypeAnimation
+                            sequence={[msg.text, () => {
+                            }]}
+                            speed={70}
+                            repeat={0}
+                            wrapper="div"
+                        />
+                    )}
+                  </div>
+                  {msg.sender === "bot" && msg.isButton && (
+                      <button
+                          onClick={() => handleSimilarQuestion(msg.id)}
+                          className="similar-question-button"
+                      >
+                        <GiReturnArrow/> {msg.text}
+                      </button>
                   )}
                 </div>
-                {msg.sender === "bot" && msg.isButton && (
-                  <button
-                    onClick={() => handleSimilarQuestion(msg.id)}
-                    className="similar-question-button"
-                  >
-                    <GiReturnArrow /> {msg.text}
-                  </button>
-                )}
-              </div>
             ))}
-            <div ref={messagesEndRef} />
+            <div ref={messagesEndRef}/>
           </div>
         </div>
-        <img src="../rob.png" alt="" className="robot-container" />
+        <img src="../rob.png" alt="" className="robot-container"/>
+
+        <div className="footer">
+          <p>© حقوق الطبع والنشر 2024 <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer"
+                                         style={{color: 'blue'}}>UNA.OIC.ORG</a> جميع الحقوق محفوظة لصالح</p>
+          <div className="social-links">
+            <a href="https://www.whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S" target="_blank"
+               rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/15713/15713434.png" alt=""/>
+            </a>
+            <a href="https://x.com/UNAOIC" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968830.png" alt=""/>
+            </a>
+            <a href="https://www.facebook.com/unaoic" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt=""/>
+            </a>
+            <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/128/1006/1006771.png" alt=""/>
+            </a>
+          </div>
+        </div>
+
       </div>
   );
 };
