@@ -9,6 +9,12 @@ body {
   font-family: "Tajawal", sans-serif !important;
 }
 
+h1 {
+  margin-top: -60px;
+  position: relative;
+  text-align: center;
+}
+
 .chat-page {
   display: flex;
   height: 100vh;
@@ -23,6 +29,8 @@ body {
   margin: 0 auto;
   width: 500px; /* Adjust the width as needed */
   height: auto;
+  position: relative;
+  top: -30px;
 }
 
 @keyframes upDown {
@@ -58,6 +66,8 @@ body {
 }
 
 .chat-container {
+  padding-bottom: 35px;
+  padding-top: 20px;
   background: transparent;
   margin: auto;
   width: 60%;
@@ -78,7 +88,6 @@ body {
   height: 10%;
   position: absolute;
   width: 100%;
-  height: 14%;
   top: 20px;
   color: white;
   text-align: center;
@@ -141,7 +150,8 @@ body {
 }
 
 .chat-message.bot .message-text {
-  max-width: 40%;
+  max-width: 25%;
+  max-height: auto;
   min-width: 100px;
   font-size: 1.1rem;
   background-color: #f1f1f1;
@@ -215,7 +225,7 @@ body {
 
 .chat-input-form {
   display: flex;
-  position: absolute;
+  position: fixed; /* Keep it at the bottom of the screen */
   bottom: 5%;
   left: 50%;
   top: 77%;
@@ -223,12 +233,6 @@ body {
   width: 75%;
   border-radius: 15px;
   overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .chat-input-form {
-    width: 90%;
-  }
 }
 
 .chat-input {
@@ -301,17 +305,19 @@ body {
   margin-top: auto;
 }
 
-.social-links {
-  margin-top: 10px;
+.social-icons {
+  margin: 10px 0;
 }
 
-.social-links a {
+.social-icons a {
+  color: #fff;
   margin: 0 10px;
+  font-size: 25px;
+  transition: color 0.3s;
 }
 
-.social-links img {
-  width: 30px;
-  height: 30px;
+.social-icons a:hover {
+  color: #007057;
 }
 
 @keyframes fadeIn {
@@ -325,106 +331,3 @@ body {
   }
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
-  .una-logo {
-    width: 150px;
-  }
-
-  .chat-header h1 {
-    font-size: 1.5rem;
-  }
-
-  .chat-header p {
-    font-size: 1rem;
-  }
-
-  .chat-container {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .chat-messages {
-    padding: 10px;
-    font-size: 1rem;
-  }
-
-  .chat-message .message-text {
-    max-width: 80%;
-    font-size: 0.95rem;
-    padding: 10px;
-  }
-
-  .chat-message.user .message-text,
-  .chat-message.bot .message-text {
-    margin-right: 0;
-  }
-
-  .chat-input-form {
-    width: 95%;
-    bottom: 10px;
-  }
-
-  .chat-input {
-    font-size: 1rem;
-    padding: 12px 16px;
-    height: 50px;
-  }
-
-  .send-button,
-  .microphone-button {
-    width: 40px;
-    height: 40px;
-    margin-top: 0;
-  }
-
-  .una-news-button {
-    font-size: 14px;
-    padding: 8px 10px;
-    height: 40px;
-    margin-top: 2px; /* تعديل المسافة العلوية ليكون الزر أعلى قليلاً */
-  }
-
-  .footer {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-
-  .social-links img {
-    width: 25px;
-    height: 25px;
-  }
-}
-
-/* Smaller mobile screens */
-@media (max-width: 480px) {
-  .chat-header h1 {
-    font-size: 1.2rem;
-  }
-
-  .chat-header p {
-    font-size: 0.9rem;
-  }
-
-  .chat-messages {
-    font-size: 0.9rem;
-  }
-
-  .similar-question-button {
-    font-size: 0.9rem;
-    padding: 6px 10px;
-  }
-
-  .chat-input {
-    font-size: 0.9rem;
-    padding: 10px;
-    height: 40px;
-  }
-
-  .send-button,
-  .microphone-button {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
-}

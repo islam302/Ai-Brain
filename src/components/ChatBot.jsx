@@ -4,7 +4,9 @@ import { FiSend } from "react-icons/fi";
 import { GiReturnArrow } from "react-icons/gi";
 import HTMLParser from 'html-react-parser';
 import { TypeAnimation } from "react-type-animation";
-import '@fortawesome/fontawesome-free/css/all.min.css'; // استيراد Font Awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWhatsapp, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons'; // استيراد الأيقونة الصحيحة
 import "./ChatBot.css";
 
 const ChatPage = () => {
@@ -14,7 +16,7 @@ const ChatPage = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
   }, [messages]);
 
   useEffect(() => {
@@ -29,14 +31,14 @@ const ChatPage = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newMessages = [...messages, { text: input, sender: "user" }];
+    const newMessages = [...messages, {text: input, sender: "user"}];
     setMessages(newMessages);
     setInput("");
 
     const apiUrl = useUnaApi ? "https://unachatbot.onrender.com/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
 
     try {
-      const response = await axios.post(apiUrl, { question: input });
+      const response = await axios.post(apiUrl, {question: input});
       const updatedMessages = [...newMessages];
 
       if (useUnaApi) {
@@ -132,7 +134,7 @@ const ChatPage = () => {
 
       const newMessages = [
         ...messages,
-        { text: similarQuestion.text, sender: "user" },
+        {text: similarQuestion.text, sender: "user"},
       ];
 
       if (response.data && response.data.answer) {
@@ -231,14 +233,13 @@ const ChatPage = () => {
               onClick={handleNewsButtonClick}
               className={`una-news-button ${useUnaApi ? 'pressed' : ''}`}
           >
-            {useUnaApi ? "اخبار من يونا" : "UNACHATBOT"}
+            {useUnaApi ? "أسئلة من منصة (UNA)" : "أسئلة عامة"}
           </button>
 
         </form>
         <div className="chat-header">
           <img src="/unalogo.png" alt="UNA Logo" className="una-logo"/>
           <h1>UNA BOOT</h1>
-          <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
         </div>
         <div className="chat-container">
           <div className="chat-messages">
@@ -275,19 +276,18 @@ const ChatPage = () => {
         <div className="footer">
           <p>© حقوق الطبع والنشر 2024 <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer"
                                          style={{color: 'blue'}}>UNA.OIC.ORG</a> جميع الحقوق محفوظة لصالح</p>
-          <div className="social-links">
-            <a href="https://www.whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S" target="_blank"
-               rel="noopener noreferrer">
-              <img src="https://cdn-icons-png.flaticon.com/128/15713/15713434.png" alt=""/>
-            </a>
-            <a href="https://x.com/UNAOIC" target="_blank" rel="noopener noreferrer">
-              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968830.png" alt=""/>
+          <div className="social-icons">
+            <a href="https://whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faWhatsapp}/>
             </a>
             <a href="https://www.facebook.com/unaoic" target="_blank" rel="noopener noreferrer">
-              <img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt=""/>
+              <FontAwesomeIcon icon={faFacebook}/>
             </a>
             <a href="https://una-oic.org/" target="_blank" rel="noopener noreferrer">
-              <img src="https://cdn-icons-png.flaticon.com/128/1006/1006771.png" alt=""/>
+              <FontAwesomeIcon icon={faGlobeAmericas}/> {/* تغيير إلى faGlobeAmericas */}
+            </a>
+            <a href="https://twitter.com/UNAOIC" target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faTwitter}/>
             </a>
           </div>
         </div>
@@ -297,3 +297,5 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
+
+
