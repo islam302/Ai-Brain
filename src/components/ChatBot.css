@@ -18,7 +18,7 @@ h1 {
 .chat-page {
   display: flex;
   height: 100vh;
-  background-image: url('./images/background.jpg'); /* Adjust the path as necessary */
+  background-image: url('./images/background.png'); /* Adjust the path as necessary */
   background-size: cover; /* Ensures the image covers the entire area */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents tiling */
@@ -173,7 +173,7 @@ h1 {
 .chat-message.user .message-text {
   max-width: 70%;
   font-size: 1.1rem;
-  background-color: #00573a;
+  background-color: #0a4c5a;
   color: #fff;
   border-radius: 15px;
   padding: 12px;
@@ -202,7 +202,7 @@ h1 {
 }
 
 .una-news-button {
-  background-color: #086b55;
+  background-color: #0a4c5a;
   color: white;
   border: none;
   border-radius: 15px;
@@ -248,7 +248,7 @@ h1 {
 }
 
 .send-button {
-  background-color: #07755d;
+  background-color: #0a4c5a;
   border: none;
   color: white;
   border-radius: 50%;
@@ -271,7 +271,7 @@ h1 {
 
 .microphone-button {
   border: none;
-  background: #07755DFF;
+  background: #0a4c5a;
   border-radius: 50%;
   transform: scale(1.05);
   width: 45px;

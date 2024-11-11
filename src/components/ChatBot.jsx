@@ -56,7 +56,7 @@ const ChatPage = () => {
                     
                     <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
                     
-                    <a href="${answer.link}" target="_blank" rel="noopener noreferrer" style="background-color: #07755d; color: white; padding: 8px 16px; text-decoration: none; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; text-align: center;">
+                    <a href="${answer.link}" target="_blank" rel="noopener noreferrer" style="background-color: #0a4c5a; color: white; padding: 8px 16px; text-decoration: none; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; text-align: center;">
                         أكمل القراءة
                     </a>
                 </div>
