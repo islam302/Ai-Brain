@@ -18,6 +18,14 @@ body {
   background-repeat: no-repeat; /* Prevents tiling */
 }
 
+.una-logo {
+  display: block;
+  margin: 0 auto;
+  width: 500px; /* Adjust the width as needed */
+  height: auto;
+}
+
+
 @keyframes upDown {
   0%,
   100% {
@@ -32,7 +40,7 @@ body {
   position: absolute;
   top: 2%;
   transform: translateY(-50%);
-  right: 33%;
+  right: 27%;
   transform: translateX(50%);
   width: 7%;
   height: 14%;

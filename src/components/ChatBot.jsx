@@ -236,6 +236,7 @@ const ChatPage = () => {
 
         </form>
         <div className="chat-header">
+          <img src="/unalogo.png" alt="UNA Logo" className="una-logo"/>
           <h1>UNA BOOT</h1>
           <p>مساعدك الشخصي بالذكاء الإصطناعي</p>
         </div>
