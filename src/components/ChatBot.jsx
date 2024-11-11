@@ -233,7 +233,7 @@ const ChatPage = () => {
               onClick={handleNewsButtonClick}
               className={`una-news-button ${useUnaApi ? 'pressed' : ''}`}
           >
-            {useUnaApi ? "أسئلة من منصة (UNA)" : "أسئلة عامة"}
+            {useUnaApi ? "(UNA) أسئلة من منصة" : "أسئلة عامة"}
           </button>
 
         </form>
