@@ -14,13 +14,26 @@ const ChatPage = () => {
   const [input, setInput] = useState("");
   const [useUnaApi, setUseUnaApi] = useState(false); // حالة التبديل بين APIs
   const messagesEndRef = useRef(null);
+  const [currentDate, setCurrentDate] = useState("");
+
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   useEffect(() => {
+    // Set the document title
     document.title = "UNA BOOT";
+
+    // Get today's date in Arabic format
+    const date = new Date();
+    const formattedDate = new Intl.DateTimeFormat("ar-EG", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(date);
+    setCurrentDate(formattedDate);
   }, []);
 
   const addLinkTargetAttribute = (html) => {
@@ -240,6 +253,10 @@ const ChatPage = () => {
         <div className="chat-header">
           <img src="/unalogo.png" alt="UNA Logo" className="una-logo"/>
           <h1>UNA BOOT</h1>
+          <div className="current-date">
+            {currentDate}
+          </div>
+
         </div>
         <div className="chat-container">
           <div className="chat-messages">
@@ -297,5 +314,4 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
-
 

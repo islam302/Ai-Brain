@@ -320,6 +320,18 @@ h1 {
   color: #007057;
 }
 
+.current-date {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: white;
+  background-color: #0a4c5a;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
