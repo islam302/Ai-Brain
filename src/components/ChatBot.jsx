@@ -44,41 +44,79 @@ const ChatPage = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newMessages = [...messages, {text: input, sender: "user"}];
+    const newMessages = [...messages, { text: input, sender: "user" }];
     setMessages(newMessages);
     setInput("");
 
-    const apiUrl = useUnaApi ? "https://unachatbot.onrender.com/ask_una/" : "https://unachatbot.onrender.com/ask_questions/";
+    const apiUrl = useUnaApi
+      ? "https://unachatbot.onrender.com/ask_una/"
+      : "https://unachatbot.onrender.com/ask_questions/";
 
     try {
-      const response = await axios.post(apiUrl, {question: input});
+      const response = await axios.post(apiUrl, { question: input });
       const updatedMessages = [...newMessages];
 
       if (useUnaApi) {
-        // التعامل مع واجهة API ask_openai
+        // Handle `ask_una` API response
         if (response.data.answer && response.data.answer.length > 0) {
           response.data.answer.forEach((answer) => {
-            updatedMessages.push({
-              text: `
-                <div style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
-                    
-                    <p style="color: #666; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
-                    
-                    <h3 style="font-size: 18px; color: #333; margin-top: 10px;">${answer.title}</h3>
-                    
-                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
-                    
-                    <a href="${answer.link}" target="_blank" rel="noopener noreferrer" style="background-color: #0a4c5a; color: white; padding: 8px 16px; text-decoration: none; border-radius: 20px; font-weight: bold; display: inline-block; margin-top: 10px; text-align: center;">
-                        أكمل القراءة
+            if (answer.search_url) {
+              // Render a button for the search URL
+              updatedMessages.push({
+                text: `
+                  <div style="text-align: center;">
+                    <a href="${answer.search_url}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       style="
+                          background-color: #0a4c5a; 
+                          color: white; 
+                          padding: 8px 16px; 
+                          text-decoration: none; 
+                          border-radius: 20px; 
+                          font-weight: bold; 
+                          display: inline-block; 
+                          margin-top: 10px; 
+                          text-align: center;">
+                       للمزيد اضغط هنا
                     </a>
-                </div>
-
-              `,
-              sender: "bot",
-              icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
-              isHtml: true,
-            });
+                  </div>
+                `,
+                sender: "bot",
+                icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+                isHtml: true,
+              });
+            } else {
+              // Render individual answer content
+              updatedMessages.push({
+                text: `
+                  <div style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
+                    <p style="color: #666; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
+                    <h3 style="font-size: 18px; color: #333; margin-top: 10px;">${answer.title}</h3>
+                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
+                    <a href="${answer.link}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       style="
+                          background-color: #0a4c5a; 
+                          color: white; 
+                          padding: 8px 16px; 
+                          text-decoration: none; 
+                          border-radius: 20px; 
+                          font-weight: bold; 
+                          display: inline-block; 
+                          margin-top: 10px; 
+                          text-align: center;">
+                      أكمل القراءة
+                    </a>
+                  </div>
+                `,
+                sender: "bot",
+                icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+                isHtml: true,
+              });
+            }
           });
         } else {
           updatedMessages.push({
@@ -88,7 +126,7 @@ const ChatPage = () => {
           });
         }
       } else {
-        // التعامل مع واجهة API ask
+        // Handle `ask_questions` API response
         if (response.data.similar_questions && response.data.similar_questions.length > 0) {
           updatedMessages.push({
             text: ":هل تقصد",
@@ -96,7 +134,6 @@ const ChatPage = () => {
             icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
           });
 
-          // إضافة أزرار للأسئلة المشابهة
           response.data.similar_questions.forEach((q) => {
             updatedMessages.push({
               sender: "bot",
