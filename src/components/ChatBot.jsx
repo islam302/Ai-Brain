@@ -78,7 +78,7 @@ const ChatPage = () => {
                           display: inline-block; 
                           margin-top: 10px; 
                           text-align: center;">
-                       للمزيد اضغط هنا
+                       للإطلاع على المزيد من الأخبار إضغط هنا
                     </a>
                   </div>
                 `,
