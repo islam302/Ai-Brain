@@ -88,10 +88,14 @@ const ChatPage = () => {
               });
             } else {
               // Render individual answer content
+              const imageHtml = answer.image_url
+                ? `<img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">`
+                : "";
+
               updatedMessages.push({
                 text: `
                   <div style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    <img src="${answer.image_url}" alt="Image" style="width: 100%; height: auto; margin-top: 10px; border-radius: 10px;">
+                    ${imageHtml}
                     <p style="color: #666; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
                     <h3 style="font-size: 18px; color: #333; margin-top: 10px;">${answer.title}</h3>
                     <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
