@@ -6,13 +6,13 @@ import HTMLParser from 'html-react-parser';
 import { TypeAnimation } from "react-type-animation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons'; // استيراد الأيقونة الصحيحة
+import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import "./ChatBot.css";
 
 const ChatPage = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [useUnaApi, setUseUnaApi] = useState(false); // حالة التبديل بين APIs
+  const [useUnaApi, setUseUnaApi] = useState(false);
   const messagesEndRef = useRef(null);
   const [currentDate, setCurrentDate] = useState("");
 
@@ -305,15 +305,36 @@ const ChatPage = () => {
                 <div key={index} className={`chat-message ${msg.sender}`}>
                   <div className="message-text">
                     {msg.isHtml ? (
-                        <div>{HTMLParser(msg.text)}</div>
-                    ) : msg.isButton ? null : (
-                        <TypeAnimation
-                            sequence={[msg.text, () => {
-                            }]}
-                            speed={70}
-                            repeat={0}
-                            wrapper="div"
+                        <div
+                            dangerouslySetInnerHTML={{
+                              __html: msg.text.replace(
+                                  /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
+                                  (_, scriptContent) => `<script>(function() { ${scriptContent} })();</script>`
+                              ),
+                            }}
+                            ref={(el) => {
+                              if (el) {
+                                // Handle dynamic content like #date
+                                const dateElement = el.querySelector("#date");
+                                if (dateElement) {
+                                  const today = new Date();
+                                  const options = {weekday: "long", day: "numeric", month: "long", year: "numeric"};
+                                  dateElement.innerText = today.toLocaleDateString("ar-EG", options);
+                                }
+
+                                // Execute scripts
+                                const scripts = el.getElementsByTagName("script");
+                                for (let i = 0; i < scripts.length; i++) {
+                                  const script = document.createElement("script");
+                                  script.innerHTML = scripts[i].innerHTML;
+                                  document.body.appendChild(script);
+                                }
+                              }
+                            }}
                         />
+                    ) : (
+                        <TypeAnimation sequence={[msg.text, () => {
+                        }]} speed={70} repeat={0} wrapper="div"/>
                     )}
                   </div>
                   {msg.sender === "bot" && msg.isButton && (
