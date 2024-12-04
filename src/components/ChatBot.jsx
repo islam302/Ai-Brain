@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { FiSend } from "react-icons/fi";
 import { GiReturnArrow } from "react-icons/gi";
-// import HTMLParser from 'html-react-parser';
+import HTMLParser from 'html-react-parser';
 import { TypeAnimation } from "react-type-animation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -15,6 +15,7 @@ const ChatPage = () => {
   const [useUnaApi, setUseUnaApi] = useState(false);
   const messagesEndRef = useRef(null);
   const [currentDate, setCurrentDate] = useState("");
+  const [placeholder, setPlaceholder] = useState("اكتب سؤالك هنا..."); // نص placeholder
 
 
   useEffect(() => {
@@ -247,24 +248,45 @@ const ChatPage = () => {
     recognition.start();
   };
 
-  const handleNewsButtonClick = () => {
-    setUseUnaApi(!useUnaApi);
+  const handleUnaClick = () => {
+
+    setUseUnaApi(true); // استخدام API الخاص بـ يونا
+    setPlaceholder("ابحث عن أخبار في يونا..."); // تغيير placeholder
+  };
+
+  const handleGeneralClick = () => {
+    setUseUnaApi(false); // استخدام API الخاص بالأسئلة العامة
+    setPlaceholder("أسئلة عامة..."); // تغيير placeholder
   };
 
   return (
       <div className="chat-page">
+        <div className="api-toggle-buttons-container">
+          <button
+              type="button"
+              onClick={handleGeneralClick}
+              className={`api-toggle-button ${!useUnaApi ? "active" : ""}`}
+          >
+            أسئلة عامة
+          </button>
+          <button
+              type="button"
+              onClick={handleUnaClick}
+              className={`api-toggle-button ${useUnaApi ? "active" : ""}`}
+          >
+            (UNA) أسئلة من منصة
+          </button>
+        </div>
+
         <form onSubmit={sendMessage} className="chat-input-form">
           <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="...اكتب سؤالك هنا"
+              placeholder={placeholder} // تغيير placeholder بناءً على الزر المضغوط
               className="chat-input"
-              style={{
-                textAlign: "right",
-                backgroundColor: useUnaApi ? "#e0f7da" : "", // لون مختلف عند تفعيل أخبار UNA
-              }}
           />
+
           <button type="submit" className="send-button">
             <FiSend/>
           </button>
@@ -282,14 +304,6 @@ const ChatPage = () => {
                 }}
             />
           </button>
-          <button
-              type="button"
-              onClick={handleNewsButtonClick}
-              className={`una-news-button ${useUnaApi ? 'pressed' : ''}`}
-          >
-            {useUnaApi ? "(UNA) أسئلة من منصة" : "أسئلة عامة"}
-          </button>
-
         </form>
         <div className="chat-header">
           <img src="/unalogo.png" alt="UNA Logo" className="una-logo"/>
@@ -300,71 +314,55 @@ const ChatPage = () => {
 
         </div>
         <div className="chat-container">
-        <div className="chat-messages">
-          {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.sender}`}>
-                {!msg.isButton && ( // إظهار النصوص فقط إذا لم تكن زر
-                    <div className="message-text">
-                      {msg.isHtml ? (
-                          <div
-                              dangerouslySetInnerHTML={{
-                                __html: msg.text.replace(
-                                    /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
-                                    (_, scriptContent) =>
-                                        `<script>(function() { ${scriptContent} })();</script>`
-                                ),
-                              }}
-                              ref={(el) => {
-                                if (el) {
-                                  // Handle dynamic content like #date
-                                  const dateElement = el.querySelector("#date");
-                                  if (dateElement) {
-                                    const today = new Date();
-                                    const options = {
-                                      weekday: "long",
-                                      day: "numeric",
-                                      month: "long",
-                                      year: "numeric",
-                                    };
-                                    dateElement.innerText = today.toLocaleDateString(
-                                        "ar-EG",
-                                        options
-                                    );
-                                  }
-
-                                  // Execute scripts
-                                  const scripts = el.getElementsByTagName("script");
-                                  for (let i = 0; i < scripts.length; i++) {
-                                    const script = document.createElement("script");
-                                    script.innerHTML = scripts[i].innerHTML;
-                                    document.body.appendChild(script);
-                                  }
+          <div className="chat-messages">
+            {messages.map((msg, index) => (
+                <div key={index} className={`chat-message ${msg.sender}`}>
+                  <div className="message-text">
+                    {msg.isHtml ? (
+                        <div
+                            dangerouslySetInnerHTML={{
+                              __html: msg.text.replace(
+                                  /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
+                                  (_, scriptContent) => `<script>(function() { ${scriptContent} })();</script>`
+                              ),
+                            }}
+                            ref={(el) => {
+                              if (el) {
+                                // Handle dynamic content like #date
+                                const dateElement = el.querySelector("#date");
+                                if (dateElement) {
+                                  const today = new Date();
+                                  const options = {weekday: "long", day: "numeric", month: "long", year: "numeric"};
+                                  dateElement.innerText = today.toLocaleDateString("ar-EG", options);
                                 }
-                              }}
-                          />
-                      ) : (
-                          <TypeAnimation
-                              sequence={[msg.text, () => {
-                              }]}
-                              speed={70}
-                              repeat={0}
-                              wrapper="div"
-                          />
-                      )}
-                    </div>
-                )}
-                {msg.isButton && msg.sender === "bot" && ( // إظهار الأزرار فقط
-                    <button
-                        onClick={() => handleSimilarQuestion(msg.id)}
-                        className="similar-question-button"
-                    >
-                      <GiReturnArrow/> {msg.text}
-                    </button>
-                )}
-              </div>
-          ))}
-          <div ref={messagesEndRef}/>
-        </div>
+
+                                // Execute scripts
+                                const scripts = el.getElementsByTagName("script");
+                                for (let i = 0; i < scripts.length; i++) {
+                                  const script = document.createElement("script");
+                                  script.innerHTML = scripts[i].innerHTML;
+                                  document.body.appendChild(script);
+                                }
+                              }
+                            }}
+                        />
+                    ) : (
+                        <TypeAnimation sequence={[msg.text, () => {
+                        }]} speed={70} repeat={0} wrapper="div"/>
+                    )}
+                  </div>
+                  {msg.sender === "bot" && msg.isButton && (
+                      <button
+                          onClick={() => handleSimilarQuestion(msg.id)}
+                          className="similar-question-button"
+                      >
+                        <GiReturnArrow/> {msg.text}
+                      </button>
+                  )}
+                </div>
+            ))}
+            <div ref={messagesEndRef}/>
+          </div>
         </div>
         <img src="../rob.png" alt="" className="robot-container"/>
 

@@ -53,13 +53,6 @@ h1 {
   animation: upDown 2s ease-in-out infinite;
 }
 
-/* Hide .robot-container on mobile view */
-@media (max-width: 1000px) {
-  .robot-container {
-    display: none;
-  }
-}
-
 .index-module_type__E-SaG::after {
   content: "";
   display: none; /* Hides the cursor */
@@ -75,13 +68,6 @@ h1 {
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-
-/* Media query for mobile view */
-@media (max-width: 768px) {
-  .chat-container {
-    width: 90%;
-  }
 }
 
 .chat-header {
@@ -142,6 +128,26 @@ h1 {
 .similar-question-button:hover {
   background-color: #85c9b5;
 }
+.multi-answer-button {
+  background-color: #0a4c5a;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  border: none;
+  border-radius: 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.message-explanation {
+  margin-top: 10px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #333;
+}
 
 .message-avatar {
   width: 50px;
@@ -201,26 +207,35 @@ h1 {
   background-color: #086b55;
 }
 
-.una-news-button {
+.api-toggle-buttons-container {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(35%);
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* ????? ??? ??????? */
+  z-index: 10; /* ??? ???? ??????? */
+}
+
+.api-toggle-button {
   background-color: #0a4c5a;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 15px;
-  padding: 10px 15px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
-  height: 50px;
-  margin-left: 10px;
-  margin-top: 15px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.una-news-button:hover {
-  background-color: #053b2f;
+.api-toggle-button.active {
+  background-color: #0a4c5a;
 }
 
-.una-news-button.pressed {
-  background-color: #053b2f;
+.api-toggle-button:hover {
+  background-color: #0f3138;
 }
 
 .chat-input-form {
@@ -230,7 +245,7 @@ h1 {
   left: 50%;
   top: 77%;
   transform: translateX(-50%);
-  width: 75%;
+  width: 65%;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -245,7 +260,10 @@ h1 {
   outline: none;
   height: 80px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: right; /* ????? ??????? ??? ?????? */
+  direction: rtl; /* ??? ?????? ??????? */
 }
+
 
 .send-button {
   background-color: #0a4c5a;
@@ -342,3 +360,125 @@ h1 {
     transform: translateY(0);
   }
 }
+
+@media (max-width: 768px) {
+  .chat-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem;
+    margin-top: -30px;
+  }
+
+  .una-logo {
+    width: 300px; /* Reduce logo size */
+    top: -10px;
+  }
+
+  .chat-page {
+    flex-direction: column;
+    height: 100vh;
+    background-size: cover;
+    padding: 10px;
+  }
+
+  .chat-container {
+    width: 100%;
+    height: auto; /* Adjust height to fit the content */
+    padding: 10px;
+    margin-top: 20px;
+    overflow-y: scroll;
+  }
+
+  .chat-header {
+    top: 10px;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 10px;
+    gap: 5px; /* Reduce gap between messages */
+  }
+
+  .chat-message .message-text {
+    font-size: 0.9rem; /* Adjust font size for readability */
+    padding: 8px;
+    margin: 5px 10px;
+    max-width: 80%; /* Ensure messages fit smaller screens */
+  }
+
+  .chat-message.bot .message-text {
+    margin-right: 0; /* Align properly for small screens */
+  }
+
+  .chat-message.user .message-text {
+    margin-right: 0; /* Align properly for small screens */
+  }
+
+  .similar-question-button {
+    font-size: 0.9rem; /* Adjust button size */
+    padding: 8px 10px;
+    margin-right: 0; /* Remove extra margin for buttons */
+  }
+
+  .chat-input-form {
+    flex-direction: column; /* Stack input and buttons vertically */
+    bottom: 10px; /* Position properly for small screens */
+    left: 5%; /* Adjust alignment */
+    width: 90%; /* Reduce width */
+  }
+
+  .chat-input {
+    height: 50px; /* Reduce height */
+    font-size: 1rem; /* Adjust font size */
+    padding: 8px 12px;
+  }
+
+  .send-button,
+  .microphone-button {
+    width: 35px; /* Smaller buttons */
+    height: 35px;
+    font-size: 1.2rem; /* Adjust icon size */
+    margin: 5px 0;
+  }
+
+  .una-news-button {
+    font-size: 0.9rem; /* Adjust button font size */
+    height: 40px; /* Reduce button height */
+  }
+
+  .robot-container {
+    display: none; /* Hide robot animation on small screens */
+  }
+
+  .footer {
+    font-size: 0.8rem; /* Adjust footer text size */
+    padding: 10px 0;
+  }
+
+  .social-icons a {
+    font-size: 20px; /* Reduce icon size */
+    margin: 0 5px;
+  }
+
+  .current-date {
+    font-size: 0.8rem; /* Reduce size of the date container */
+    padding: 5px 10px;
+    right: 10px; /* Adjust positioning */
+    top: 10px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .robot-container {
+    display: none;
+  }
+}
+
+
+
