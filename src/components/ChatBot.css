@@ -211,7 +211,7 @@ h1 {
   position: absolute;
   top: 70%;
   left: 50%;
-  transform: translateX(35%);
+  transform: translateX(25%);
   display: flex;
   justify-content: center;
   gap: 10px; /* ????? ??? ??????? */
