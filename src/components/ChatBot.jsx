@@ -251,12 +251,12 @@ const ChatPage = () => {
   const handleUnaClick = () => {
 
     setUseUnaApi(true); // استخدام API الخاص بـ يونا
-    setPlaceholder("ابحث عن أخبار في يونا..."); // تغيير placeholder
+    setPlaceholder("اسأل عن خبر من منصة يونا..."); // تغيير placeholder
   };
 
   const handleGeneralClick = () => {
     setUseUnaApi(false); // استخدام API الخاص بالأسئلة العامة
-    setPlaceholder("أسئلة عامة..."); // تغيير placeholder
+    setPlaceholder("ماذا تريد أن تعرف..."); // تغيير placeholder
   };
 
   return (
