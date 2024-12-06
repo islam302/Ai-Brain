@@ -323,8 +323,8 @@ h1 {
 }
 
 .footer {
-  margin-top: 551px;
-  /*position: fixed;*/
+  margin-top: 20px;
+  position: fixed;
   bottom: -0.8%;
   width: 100%;
   color: #ffffff;
