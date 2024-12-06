@@ -7,6 +7,8 @@
 
 body {
   font-family: "Tajawal", sans-serif !important;
+  /* overflow: scroll; */
+  /* padding-bottom: 100px; */
 }
 
 h1 {
@@ -198,29 +200,34 @@ h1 {
 }
 
 .api-toggle-buttons-container {
-  position: absolute;
-  padding-bottom: 10px;
-  /* margin: auto; */
-  top: 70%;
-  left: 50%;
-  width: 100%;
-  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   gap: 10px;
-  z-index: 10;
+  justify-content: center;
+  flex-direction: row;
+  margin-right: 10px;
+  margin-top: 3%;
+  /* height: 100%; */
 }
 
 .api-toggle-button {
   background-color: #0a4c5a;
   color: white;
   border: none;
+  width: 20%;
+  margin-bottom: 10px;
   padding: 10px 20px;
   border-radius: 15px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  /* Adjust the max-width as needed for your mobile breakpoint */
+  .api-toggle-button {
+    padding: 2px 4px;
+  }
 }
 
 .api-toggle-button.active {
@@ -234,8 +241,9 @@ h1 {
 
 .chat-input-form {
   display: flex;
+  flex-direction: column;
   position: fixed;
-  bottom: 5%;
+  bottom: 20%;
   left: 50%;
   top: 77%;
   transform: translateX(-50%);
@@ -243,9 +251,10 @@ h1 {
   margin: auto;
   border-radius: 15px;
   overflow: hidden;
+  height: fit-content;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .chat-input-form {
     width: 90%;
   }
@@ -261,8 +270,8 @@ h1 {
   outline: none;
   height: 80px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  text-align: right; /* ????? ??????? ??? ?????? */
-  direction: rtl; /* ??? ?????? ??????? */
+  text-align: right;
+  direction: rtl;
 }
 
 .send-button {
@@ -315,12 +324,10 @@ h1 {
 
 .footer {
   position: fixed;
+  bottom: -0.5%;
   width: 100%;
   color: #ffffff;
-  padding: 20px 0;
   text-align: center;
-  bottom: -35px;
-  margin-top: auto;
 }
 
 .social-icons {
@@ -457,8 +464,9 @@ h1 {
   }
 
   .footer {
-    font-size: 0.8rem; /* Adjust footer text size */
+    font-size: 0.6rem; /* Adjust footer text size */
     padding: 10px 0;
+    margin-top: 5px; /* Add 3px margin to move it down */
   }
 
   .social-icons a {
@@ -478,4 +486,8 @@ h1 {
   .robot-container {
     display: none;
   }
+}
+.form-question-container {
+  display: flex;
+  align-items: center;
 }

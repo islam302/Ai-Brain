@@ -3,9 +3,13 @@ import axios from "axios";
 import { FiSend } from "react-icons/fi";
 import { GiReturnArrow } from "react-icons/gi";
 import { TypeAnimation } from "react-type-animation";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWhatsapp, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faWhatsapp,
+  faFacebook,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import { faGlobeAmericas } from "@fortawesome/free-solid-svg-icons";
 import "./ChatBot.css";
 
 const ChatPage = () => {
@@ -16,14 +20,13 @@ const ChatPage = () => {
   const [currentDate, setCurrentDate] = useState("");
   const [placeholder, setPlaceholder] = useState("اكتب سؤالك هنا..."); // نص placeholder
 
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   useEffect(() => {
     // Set the document title
-    document.title = "UNA BOOT";
+    document.title = "UNA BOT";
 
     // Get today's date in Arabic format
     const date = new Date();
@@ -37,7 +40,10 @@ const ChatPage = () => {
   }, []);
 
   const addLinkTargetAttribute = (html) => {
-    return html.replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ');
+    return html.replace(
+      /<a /g,
+      '<a target="_blank" rel="noopener noreferrer" '
+    );
   };
 
   const sendMessage = async (e) => {
@@ -131,7 +137,10 @@ const ChatPage = () => {
         }
       } else {
         // Handle `ask_questions` API response
-        if (response.data.similar_questions && response.data.similar_questions.length > 0) {
+        if (
+          response.data.similar_questions &&
+          response.data.similar_questions.length > 0
+        ) {
           updatedMessages.push({
             text: ":هل تقصد",
             sender: "bot",
@@ -182,13 +191,16 @@ const ChatPage = () => {
     if (!similarQuestion) return;
 
     try {
-      const response = await axios.post("https://unachatbot.onrender.com/ask_questions/", {
-        question: similarQuestion.text,
-      });
+      const response = await axios.post(
+        "https://unachatbot.onrender.com/ask_questions/",
+        {
+          question: similarQuestion.text,
+        }
+      );
 
       const newMessages = [
         ...messages,
-        {text: similarQuestion.text, sender: "user"},
+        { text: similarQuestion.text, sender: "user" },
       ];
 
       if (response.data && response.data.answer) {
@@ -221,7 +233,8 @@ const ChatPage = () => {
   };
 
   const startListening = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       alert("Speech recognition is not supported in this browser.");
@@ -248,7 +261,6 @@ const ChatPage = () => {
   };
 
   const handleUnaClick = () => {
-
     setUseUnaApi(true); // استخدام API الخاص بـ يونا
     setPlaceholder("اسأل عن خبر من منصة يونا..."); // تغيير placeholder
   };
@@ -262,132 +274,133 @@ const ChatPage = () => {
     <div className="chat-page">
       {/* Header */}
       <div className="chat-header">
-        <img src="/unalogo.png" alt="UNA Logo" className="una-logo"/>
-        <h1>UNA BOOT</h1>
+        <img src="/unalogo.png" alt="UNA Logo" className="una-logo" />
+        <h1>UNA BOT</h1>
         <div className="current-date">{currentDate}</div>
       </div>
       {/* Chat messages container */}
       <div className="chat-container">
         <div className="chat-messages">
           {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.sender}`}>
-                <div className="message-text">
-                  {msg.isHtml ? (
-                      <div
-                          dangerouslySetInnerHTML={{
-                            __html: msg.text.replace(
-                                /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
-                                (_, scriptContent) =>
-                                    `<script>(function() { ${scriptContent} })();</script>`
-                            ),
-                          }}
-                          ref={(el) => {
-                            if (el) {
-                              const dateElement = el.querySelector("#date");
-                              if (dateElement) {
-                                const today = new Date();
-                                const options = {
-                                  weekday: "long",
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                };
-                                dateElement.innerText = today.toLocaleDateString(
-                                    "ar-EG",
-                                    options
-                                );
-                              }
-                              const scripts = el.getElementsByTagName("script");
-                              for (let i = 0; i < scripts.length; i++) {
-                                const script = document.createElement("script");
-                                script.innerHTML = scripts[i].innerHTML;
-                                document.body.appendChild(script);
-                              }
-                            }
-                          }}
-                      />
-                  ) : (
-                      <TypeAnimation
-                          sequence={[msg.text, () => {
-                          }]}
-                          speed={70}
-                          repeat={0}
-                          wrapper="div"
-                      />
-                  )}
-                </div>
-                {msg.sender === "bot" && msg.isButton && (
-                    <button
-                        onClick={() => handleSimilarQuestion(msg.id)}
-                        className="similar-question-button"
-                    >
-                      <GiReturnArrow/> {msg.text}
-                    </button>
+            <div key={index} className={`chat-message ${msg.sender}`}>
+              <div className="message-text">
+                {msg.isHtml ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: msg.text.replace(
+                        /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
+                        (_, scriptContent) =>
+                          `<script>(function() { ${scriptContent} })();</script>`
+                      ),
+                    }}
+                    ref={(el) => {
+                      if (el) {
+                        const dateElement = el.querySelector("#date");
+                        if (dateElement) {
+                          const today = new Date();
+                          const options = {
+                            weekday: "long",
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          };
+                          dateElement.innerText = today.toLocaleDateString(
+                            "ar-EG",
+                            options
+                          );
+                        }
+                        const scripts = el.getElementsByTagName("script");
+                        for (let i = 0; i < scripts.length; i++) {
+                          const script = document.createElement("script");
+                          script.innerHTML = scripts[i].innerHTML;
+                          document.body.appendChild(script);
+                        }
+                      }
+                    }}
+                  />
+                ) : (
+                  <TypeAnimation
+                    sequence={[msg.text, () => {}]}
+                    speed={70}
+                    repeat={0}
+                    wrapper="div"
+                  />
                 )}
               </div>
+              {msg.sender === "bot" && msg.isButton && (
+                <button
+                  onClick={() => handleSimilarQuestion(msg.id)}
+                  className="similar-question-button"
+                >
+                  <GiReturnArrow /> {msg.text}
+                </button>
+              )}
+            </div>
           ))}
-          <div ref={messagesEndRef}/>
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
       {/* Message input form */}
       <form onSubmit={sendMessage} className="chat-input-form">
-        <input
+        <div className="api-toggle-buttons-container">
+          <button
+            type="button"
+            onClick={handleGeneralClick}
+            className={`api-toggle-button ${!useUnaApi ? "active" : ""}`}
+          >
+            أسئلة عامة
+          </button>
+          <button
+            type="button"
+            onClick={handleUnaClick}
+            className={`api-toggle-button ${useUnaApi ? "active" : ""}`}
+          >
+            (UNA) أسئلة من منصة
+          </button>
+        </div>
+        <div className="form-question-container">
+          <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={placeholder}
             className="chat-input"
-        />
-        <button type="submit" className="send-button">
-          <FiSend/>
-        </button>
-        <button
+          />
+          <button type="submit" className="send-button">
+            <FiSend />
+          </button>
+          <button
             type="button"
             onMouseDown={startListening}
             className="microphone-button"
-        >
-          <img
+          >
+            <img
               src="../microphone.png"
               alt="ميكروفون"
               style={{
                 width: "27px",
                 height: "27px",
               }}
-          />
-        </button>
+            />
+          </button>
+        </div>
       </form>
 
       {/* Buttons for switching question types */}
-      <div className="api-toggle-buttons-container">
-        <button
-            type="button"
-            onClick={handleGeneralClick}
-            className={`api-toggle-button ${!useUnaApi ? "active" : ""}`}
-        >
-          أسئلة عامة
-        </button>
-        <button
-            type="button"
-            onClick={handleUnaClick}
-            className={`api-toggle-button ${useUnaApi ? "active" : ""}`}
-        >
-          (UNA) أسئلة من منصة
-        </button>
-      </div>
 
       {/* Robot animation */}
-      <img src="../rob.png" alt="" className="robot-container"/>
+      <img src="../rob.png" alt="" className="robot-container" />
 
       {/* Footer */}
       <div className="footer">
         <p>
           © حقوق الطبع والنشر 2024{" "}
           <a
-              href="https://una-oic.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{color: "blue"}}
+            href="https://una-oic.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "blue" }}
           >
             UNA.OIC.ORG
           </a>{" "}
@@ -395,32 +408,32 @@ const ChatPage = () => {
         </p>
         <div className="social-icons">
           <a
-              href="https://whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S"
-              target="_blank"
-              rel="noopener noreferrer"
+            href="https://whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faWhatsapp}/>
+            <FontAwesomeIcon icon={faWhatsapp} />
           </a>
           <a
-              href="https://www.facebook.com/unaoic"
-              target="_blank"
-              rel="noopener noreferrer"
+            href="https://www.facebook.com/unaoic"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faFacebook}/>
+            <FontAwesomeIcon icon={faFacebook} />
           </a>
           <a
-              href="https://una-oic.org/"
-              target="_blank"
-              rel="noopener noreferrer"
+            href="https://una-oic.org/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faGlobeAmericas}/>
+            <FontAwesomeIcon icon={faGlobeAmericas} />
           </a>
           <a
-              href="https://twitter.com/UNAOIC"
-              target="_blank"
-              rel="noopener noreferrer"
+            href="https://twitter.com/UNAOIC"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faTwitter}/>
+            <FontAwesomeIcon icon={faTwitter} />
           </a>
         </div>
       </div>
@@ -429,4 +442,3 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
-
