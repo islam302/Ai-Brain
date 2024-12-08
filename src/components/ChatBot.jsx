@@ -56,14 +56,19 @@ const ChatPage = () => {
 
     const apiUrl = useUnaApi
       ? "https://unachatbot.onrender.com/ask_una/"
-      : "https://unachatbot.onrender.com/ask_questions/";
+      : "http://127.0.0.1:8000/ask_questions/";
 
     try {
+      console.log("Sending request to:", apiUrl);
+      console.log("Payload:", { question: input });
+
       const response = await axios.post(apiUrl, { question: input });
+      console.log("Response Data:", response.data);
+
       const updatedMessages = [...newMessages];
 
       if (useUnaApi) {
-        // Handle `ask_una` API response
+        // Handle UNA API response
         if (response.data.answer && response.data.answer.length > 0) {
           response.data.answer.forEach((answer) => {
             if (answer.search_url) {
@@ -137,24 +142,30 @@ const ChatPage = () => {
         }
       } else {
         // Handle `ask_questions` API response
-        if (
-          response.data.similar_questions &&
-          response.data.similar_questions.length > 0
-        ) {
-          updatedMessages.push({
-            text: ":هل تقصد",
-            sender: "bot",
-            icon: "https://i.postimg.cc/YSzf3QQx/chatbot-1.png",
+        if (response.data.answer_type === "multiple") {
+          // Process 'multiple' answers
+          const answerText = response.data.answer;
+          const lines = answerText.split("\n");
+          const collapsibleItems = [];
+          let currentTitle = "";
+
+          lines.forEach((line) => {
+            if (line.startsWith("-")) {
+              currentTitle = line; // Keep raw HTML for the title
+              collapsibleItems.push({
+                title: currentTitle,
+                description: "",
+                isExpanded: false,
+              });
+            } else if (currentTitle) {
+              collapsibleItems[collapsibleItems.length - 1].description += line; // Keep raw HTML for the description
+            }
           });
 
-          response.data.similar_questions.forEach((q) => {
-            updatedMessages.push({
-              sender: "bot",
-              id: q.id,
-              text: q.question,
-              isButton: true,
-              isHtml: false,
-            });
+          updatedMessages.push({
+            sender: "bot",
+            collapsibleItems,
+            type: "multipleAnswers",
           });
         } else if (response.data.answer) {
           updatedMessages.push({
@@ -174,7 +185,7 @@ const ChatPage = () => {
 
       setMessages(updatedMessages);
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error("Error sending message:", error.response || error.message);
       setMessages((prevMessages) => [
         ...prevMessages,
         {
@@ -184,6 +195,30 @@ const ChatPage = () => {
         },
       ]);
     }
+  };
+
+  const toggleItem = (messageIndex, itemIndex) => {
+      setMessages((prevMessages) =>
+        prevMessages.map((msg, msgIdx) => {
+          if (msgIdx === messageIndex && msg.type === "multipleAnswers") {
+            return {
+              ...msg,
+              collapsibleItems: msg.collapsibleItems.map((item, idx) =>
+                idx === itemIndex
+                  ? { ...item, isExpanded: !item.isExpanded }
+                  : item
+              ),
+            };
+          }
+          return msg;
+        })
+      );
+    };
+  
+  const stripHtmlTags = (html) => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
   };
 
   const handleSimilarQuestion = async (id) => {
@@ -280,68 +315,58 @@ const ChatPage = () => {
       </div>
       {/* Chat messages container */}
       <div className="chat-container">
-        <div className="chat-messages">
+      <div className="chat-messages">
           {messages.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.sender}`}>
-              <div className="message-text">
-                {msg.isHtml ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: msg.text.replace(
-                        /<script\b[^>]*>([\s\S]*?)<\/script>/gm,
-                        (_, scriptContent) =>
-                          `<script>(function() { ${scriptContent} })();</script>`
-                      ),
-                    }}
-                    ref={(el) => {
-                      if (el) {
-                        const dateElement = el.querySelector("#date");
-                        if (dateElement) {
-                          const today = new Date();
-                          const options = {
-                            weekday: "long",
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          };
-                          dateElement.innerText = today.toLocaleDateString(
-                            "ar-EG",
-                            options
-                          );
-                        }
-                        const scripts = el.getElementsByTagName("script");
-                        for (let i = 0; i < scripts.length; i++) {
-                          const script = document.createElement("script");
-                          script.innerHTML = scripts[i].innerHTML;
-                          document.body.appendChild(script);
-                        }
-                      }
-                    }}
-                  />
-                ) : (
-                  <TypeAnimation
-                    sequence={[msg.text, () => {}]}
-                    speed={70}
-                    repeat={0}
-                    wrapper="div"
-                  />
-                )}
+              <div key={index} className={`chat-message ${msg.sender}`}>
+                  <div className="message-text">
+                      {msg.isHtml ? (
+                          <div
+                              dangerouslySetInnerHTML={{
+                                  __html: msg.text,
+                              }}
+                          />
+                      ) : msg.type === "multipleAnswers" ? (
+                          msg.collapsibleItems.map((item, itemIndex) => (
+                              <div key={itemIndex} className="collapsible-item">
+                                  <button
+                                      onClick={() => toggleItem(index, itemIndex)}
+                                      className="collapsible-button"
+                                  >
+                                      {item.title}
+                                  </button>
+                                    {item.isExpanded && (
+                                      <div
+                                        className="collapsible-content"
+                                        dangerouslySetInnerHTML={{ __html: item.description }}
+                                      />
+                                    )}
+                              </div>
+                          ))
+                      ) : (
+                          <TypeAnimation
+                              sequence={[msg.text, () => {
+                              }]}
+                              speed={70}
+                              repeat={0}
+                              wrapper="div"
+                          />
+                      )}
+                  </div>
+                  {msg.sender === "bot" && msg.isButton && (
+                      <button
+                          onClick={() => handleSimilarQuestion(msg.id)}
+                          className="similar-question-button"
+                      >
+                          <GiReturnArrow/> {msg.text}
+                      </button>
+                  )}
               </div>
-              {msg.sender === "bot" && msg.isButton && (
-                <button
-                  onClick={() => handleSimilarQuestion(msg.id)}
-                  className="similar-question-button"
-                >
-                  <GiReturnArrow /> {msg.text}
-                </button>
-              )}
-            </div>
           ))}
-          <div ref={messagesEndRef} />
-        </div>
+          <div ref={messagesEndRef}/>
+      </div>
       </div>
 
-      {/* Message input form */}
+        {/* Message input form */}
       <form onSubmit={sendMessage} className="chat-input-form">
         <div className="api-toggle-buttons-container">
           <button
