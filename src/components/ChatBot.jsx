@@ -214,12 +214,6 @@ const ChatPage = () => {
         })
       );
     };
-  
-  const stripHtmlTags = (html) => {
-    const div = document.createElement("div");
-    div.innerHTML = html;
-    return div.textContent || div.innerText || "";
-  };
 
   const handleSimilarQuestion = async (id) => {
     const similarQuestion = messages.find((msg) => msg.id === id);
@@ -315,55 +309,55 @@ const ChatPage = () => {
       </div>
       {/* Chat messages container */}
       <div className="chat-container">
-      <div className="chat-messages">
-          {messages.map((msg, index) => (
-              <div key={index} className={`chat-message ${msg.sender}`}>
-                  <div className="message-text">
-                      {msg.isHtml ? (
-                          <div
-                              dangerouslySetInnerHTML={{
-                                  __html: msg.text,
-                              }}
-                          />
-                      ) : msg.type === "multipleAnswers" ? (
-                          msg.collapsibleItems.map((item, itemIndex) => (
-                              <div key={itemIndex} className="collapsible-item">
-                                  <button
-                                      onClick={() => toggleItem(index, itemIndex)}
-                                      className="collapsible-button"
-                                  >
-                                      {item.title}
-                                  </button>
-                                    {item.isExpanded && (
-                                      <div
-                                        className="collapsible-content"
-                                        dangerouslySetInnerHTML={{ __html: item.description }}
-                                      />
-                                    )}
-                              </div>
-                          ))
-                      ) : (
-                          <TypeAnimation
-                              sequence={[msg.text, () => {
-                              }]}
-                              speed={70}
-                              repeat={0}
-                              wrapper="div"
-                          />
-                      )}
-                  </div>
-                  {msg.sender === "bot" && msg.isButton && (
-                      <button
-                          onClick={() => handleSimilarQuestion(msg.id)}
-                          className="similar-question-button"
-                      >
-                          <GiReturnArrow/> {msg.text}
-                      </button>
-                  )}
-              </div>
-          ))}
-          <div ref={messagesEndRef}/>
-      </div>
+        <div className="chat-messages">
+            {messages.map((msg, index) => (
+                <div key={index} className={`chat-message ${msg.sender}`}>
+                    <div className="message-text">
+                        {msg.isHtml ? (
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: msg.text,
+                                }}
+                            />
+                        ) : msg.type === "multipleAnswers" ? (
+                            msg.collapsibleItems.map((item, itemIndex) => (
+                                <div key={itemIndex} className="collapsible-item">
+                                    <button
+                                        onClick={() => toggleItem(index, itemIndex)}
+                                        className="collapsible-button"
+                                    >
+                                        {item.title}
+                                    </button>
+                                      {item.isExpanded && (
+                                        <div
+                                          className="collapsible-content"
+                                          dangerouslySetInnerHTML={{ __html: item.description }}
+                                        />
+                                      )}
+                                </div>
+                            ))
+                        ) : (
+                            <TypeAnimation
+                                sequence={[msg.text, () => {
+                                }]}
+                                speed={70}
+                                repeat={0}
+                                wrapper="div"
+                            />
+                        )}
+                    </div>
+                    {msg.sender === "bot" && msg.isButton && (
+                        <button
+                            onClick={() => handleSimilarQuestion(msg.id)}
+                            className="similar-question-button"
+                        >
+                            <GiReturnArrow/> {msg.text}
+                        </button>
+                    )}
+                </div>
+            ))}
+            <div ref={messagesEndRef}/>
+        </div>
       </div>
 
         {/* Message input form */}
