@@ -398,11 +398,6 @@ h1 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ????? ?? ????? */
 }
 
-.form-question-container {
-  display: flex;
-  align-items: center;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -414,264 +409,125 @@ h1 {
   }
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 1024px) {
-  .chat-container {
-    width: 85%;
-  }
-
-  .chat-input-form {
-    width: 85%;
-  }
-  .robot-container {
-    position: absolute;
-    top: 2%;
-    right: 23%;
-    width: 7%;
-    height: 14%;
-    animation: upDown 2s ease-in-out infinite;
-  }
-
-}
-
 @media (max-width: 768px) {
-
   .chat-container {
     width: 90%;
-  }
-
-  .chat-input-form {
-    width: 90%;
-  }
-
-  .chat-message.bot .message-text,
-
-  .chat-message.user .message-text {
-    max-width: 70%;
-    margin-right: 120px;
-  }
-
-  .una-logo {
-    width: 350px;
-  }
-
-  .current-date {
-    top: 85px;
-    right: 50%;
-    transform: translateX(50%);
-  }
-
-  .robot-container {
-    position: absolute;
-    top: 2%;
-    right: 18%;
-    width: 10%;
-    height: 14%;
-    animation: upDown 2s ease-in-out infinite;
-  }
-
-  .form-question-container {
-    display: flex;
-    align-items: center;
-    margin-top: 100px; /* ?? ?? ???? ?????? */
-  }
-
-}
-
-@media (max-width: 480px) {
-  .una-logo {
-    width: 300px;
-  }
-
-  .current-date {
-    top: 80px;
-    right: 50%;
-    transform: translateX(50%);
-  }
-
-  .chat-container {
-    width: 100%;
-  }
-
-  .chat-input-form {
-    width: 100%;
-  }
-
-  .chat-message.bot .message-text,
-  .chat-message.user .message-text {
-    max-width: 90%;
-    margin-right: 0;
-    margin-bottom: -15px; /* ????? ??????? ??? ??????? */
-  }
-
-  .send-button,
-  .microphone-button {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
-
-  .footer {
-    font-size: 0.7rem;
-    margin-top: -20px; /* ??? ?????? ?????? */
-  }
-
-
-  .social-icons a {
-    font-size: 20px;
-    margin: 0 5px;
-  }
-
-  .collapsible-button {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
-  .collapsible-content {
-    font-size: 0.8rem;
-    padding: 10px;
-  }
-
-  .robot-container {
-    display: none;
-  }
-
-  .api-toggle-buttons-container {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .api-toggle-button {
-    width: 100%;
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .form-question-container {
-    display: flex;
-    align-items: center;
-    margin-top: 10px; /* ?? ?? ???? ?????? */
   }
 }
 
 @media (max-width: 400px) {
+  h1 {
+    font-size: 1.5rem;
+    margin-top: -30px;
+  }
+
+  .una-logo {
+    width: 300px; /* Reduce logo size */
+    top: -10px;
+  }
+
+  .chat-page {
+    flex-direction: column;
+    height: 100vh;
+    background-size: cover;
+    padding: 10px;
+  }
 
   .chat-container {
     width: 100%;
+    height: auto; /* Adjust height to fit the content */
+    padding: 10px;
+    margin-top: 20px;
+    overflow-y: scroll;
+  }
+
+  .chat-header {
+    top: 10px;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 10px;
+    gap: 5px; /* Reduce gap between messages */
+  }
+
+  .chat-message .message-text {
+    font-size: 0.9rem; /* Adjust font size for readability */
+    padding: 8px;
+    margin: 5px 10px;
+    max-width: 80%; /* Ensure messages fit smaller screens */
+  }
+
+  .chat-message.bot .message-text {
+    margin-right: 0; /* Align properly for small screens */
+  }
+
+  .chat-message.user .message-text {
+    margin-right: 0; /* Align properly for small screens */
+  }
+
+  .similar-question-button {
+    font-size: 0.9rem; /* Adjust button size */
+    padding: 8px 10px;
+    margin-right: 0; /* Remove extra margin for buttons */
   }
 
   .chat-input-form {
-    width: 100%;
+    flex-direction: column; /* Stack input and buttons vertically */
+    bottom: 10px; /* Position properly for small screens */
+    left: 5%; /* Adjust alignment */
+    width: 90%; /* Reduce width */
   }
 
-  .chat-message {
-    margin-bottom: 5px; /* Reduce the margin between messages */
-  }
-
-  .chat-message.bot .message-text,
-  .chat-message.user .message-text {
-    max-width: 100%;
-    font-size: 1rem;
-    margin-right: 0;
-    margin-bottom: -15px;
+  .chat-input {
+    height: 50px; /* Reduce height */
+    font-size: 1rem; /* Adjust font size */
+    padding: 8px 12px;
   }
 
   .send-button,
-
   .microphone-button {
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
+    width: 35px; /* Smaller buttons */
+    height: 35px;
+    font-size: 1.2rem; /* Adjust icon size */
+    margin: 5px 0;
   }
 
-  .form-question-container {
-      display: flex;
-      align-items: center;
-      margin-top: 20px; /* ?? ?? ???? ?????? */
-  }
-
-  .footer {
-    font-size: 0.6rem;
-    position: relative;
-    top: 91.5%; /* ??? ?????? ?????? */
-  }
-
-  .social-icons a {
-    font-size: 18px;
-    margin: 0 3px;
-  }
-
-  .collapsible-button {
-    font-size: 0.8rem;
-    padding: 8px;
-  }
-
-  .collapsible-content {
-    font-size: 0.7rem;
-    padding: 8px;
-  }
-
-  .una-logo {
-    width: 300px;
-  }
-
-  .current-date {
-    top: 70px;
-    right: 50%;
-    transform: translateX(50%);
+  .una-news-button {
+    font-size: 0.9rem; /* Adjust button font size */
+    height: 40px; /* Reduce button height */
   }
 
   .robot-container {
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    width: 7%;
-    height: 14%;
-    animation: upDown 2s ease-in-out infinite;
-  }
-
-}
-
-@media (max-width: 320px) {
-  .una-logo {
-    width: 200px;
-  }
-
-  .chat-message.bot .message-text,
-  .chat-message.user .message-text {
-    max-width: 100%;
-    margin-right: 0;
-  }
-
-  .send-button,
-  .microphone-button {
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
+    display: none; /* Hide robot animation on small screens */
   }
 
   .footer {
-    font-size: 0.6rem;
+    font-size: 0.6rem; /* Adjust footer text size */
+    padding: 10px 0;
   }
 
   .social-icons a {
-    font-size: 18px;
-    margin: 0 3px;
+    font-size: 20px; /* Reduce icon size */
+    margin: 0 5px;
   }
 
   .current-date {
-    font-size: 0.7rem;
-    padding: 4px 8px;
-  }
-
-  .collapsible-button {
-    font-size: 0.8rem;
-    padding: 8px;
-  }
-
-  .collapsible-content {
-    font-size: 0.7rem;
-    padding: 8px;
+    font-size: 0.8rem; /* Reduce size of the date container */
+    padding: 5px 10px;
+    right: 10px; /* Adjust positioning */
+    top: 10px;
   }
 }
 
+@media (max-width: 1000px) {
+  .robot-container {
+    display: none;
+  }
+}
+.form-question-container {
+  display: flex;
+  align-items: center;
+}
