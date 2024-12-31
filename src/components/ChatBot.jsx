@@ -5,9 +5,9 @@ import { GiReturnArrow } from "react-icons/gi";
 import { TypeAnimation } from "react-type-animation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faWhatsapp,
   faFacebook,
   faTwitter,
+  faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 import { faGlobeAmericas } from "@fortawesome/free-solid-svg-icons";
 import "./ChatBot.css";
@@ -26,7 +26,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     // Set the document title
-    document.title = "UNA BOT";
+    document.title = "OIC BOT";
 
     // Get today's date in Arabic format
     const date = new Date();
@@ -215,6 +215,7 @@ const ChatPage = () => {
       );
     };
 
+
   const handleSimilarQuestion = async (id) => {
     const similarQuestion = messages.find((msg) => msg.id === id);
     if (!similarQuestion) return;
@@ -304,7 +305,6 @@ const ChatPage = () => {
       {/* Header */}
       <div className="chat-header">
         <img src="/unalogo.png" alt="UNA Logo" className="una-logo" />
-        <h1>UNA BOT</h1>
         <div className="current-date">{currentDate}</div>
       </div>
       {/* Chat messages container */}
@@ -375,7 +375,7 @@ const ChatPage = () => {
             onClick={handleUnaClick}
             className={`api-toggle-button ${useUnaApi ? "active" : ""}`}
           >
-            (UNA) أسئلة من منصة
+            (OIC) أسئلة من منصة
           </button>
         </div>
         <div className="form-question-container">
@@ -416,10 +416,10 @@ const ChatPage = () => {
         <p>
           © حقوق الطبع والنشر 2024{" "}
           <a
-            href="https://una-oic.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "blue" }}
+              href="https://una-oic.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{color: "blue"}}
           >
             UNA.OIC.ORG
           </a>{" "}
@@ -427,32 +427,32 @@ const ChatPage = () => {
         </p>
         <div className="social-icons">
           <a
-            href="https://whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S"
-            target="_blank"
-            rel="noopener noreferrer"
+              href="https://whatsapp.com/channel/0029Va9VuuE1XquahZEY5S1S"
+              target="_blank"
+              rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faWhatsapp} />
+            <FontAwesomeIcon icon={faWhatsapp}/>
           </a>
           <a
-            href="https://www.facebook.com/unaoic"
-            target="_blank"
-            rel="noopener noreferrer"
+              href="https://www.facebook.com/unaoic"
+              target="_blank"
+              rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faFacebook} />
+            <FontAwesomeIcon icon={faFacebook}/>
           </a>
           <a
-            href="https://una-oic.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+              href="https://una-oic.org/"
+              target="_blank"
+              rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faGlobeAmericas} />
+            <FontAwesomeIcon icon={faGlobeAmericas}/>
           </a>
           <a
-            href="https://twitter.com/UNAOIC"
-            target="_blank"
-            rel="noopener noreferrer"
+              href="https://twitter.com/UNAOIC"
+              target="_blank"
+              rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faTwitter} />
+            <FontAwesomeIcon icon={faTwitter}/>
           </a>
         </div>
       </div>

@@ -7,50 +7,36 @@
 
 body {
   font-family: "Tajawal", sans-serif !important;
-  /* overflow: scroll; */
-  /* padding-bottom: 100px; */
-}
-
-h1 {
-  margin-top: -60px;
-  position: relative;
-  text-align: center;
 }
 
 .chat-page {
   display: flex;
   height: 100vh;
-  background-image: url("./images/background.png"); /* Adjust the path as necessary */
-  background-size: cover; /* Ensures the image covers the entire area */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents tiling */
+  background-color: #202123;
 }
 
 .una-logo {
   display: block;
   margin: 0 auto;
-  width: 500px; /* Adjust the width as needed */
+  width: 400px;
   height: auto;
   position: relative;
-  top: -30px;
+  top: -20px;
 }
 
 @keyframes upDown {
-  0%,
-  100% {
-    transform: translateY(0); /* Start and end at the original position */
+  0%, 100% {
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px); /* Move up by 10px at halfway */
+    transform: translateY(-10px);
   }
 }
 
 .robot-container {
   position: absolute;
   top: 2%;
-  transform: translateY(-50%);
   right: 27%;
-  transform: translateX(50%);
   width: 7%;
   height: 14%;
   animation: upDown 2s ease-in-out infinite;
@@ -58,7 +44,7 @@ h1 {
 
 .index-module_type__E-SaG::after {
   content: "";
-  display: none; /* Hides the cursor */
+  display: none;
 }
 
 .chat-container {
@@ -84,9 +70,6 @@ h1 {
 
 .chat-messages {
   background: transparent;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
   flex: 1;
   padding: 20px;
@@ -110,17 +93,9 @@ h1 {
   margin-bottom: 10px;
 }
 
-.chat-message.user {
-  justify-content: flex-end;
-}
-
-.chat-message.bot {
-  justify-content: flex-end;
-}
-
 .similar-question-button {
-  background-color: #99e3ca;
-  color: #08593e;
+  background-color: #323436;
+  color: #ffff;
   border: none;
   padding: 8px 12px;
   border-radius: 5px;
@@ -152,8 +127,8 @@ h1 {
   max-height: auto;
   min-width: 100px;
   font-size: 1.1rem;
-  background-color: #f1f1f1;
-  color: #333;
+  background-color: #202123;
+  color: #ffffff;
   border-radius: 15px;
   padding: 12px;
   margin: 5px;
@@ -171,32 +146,13 @@ h1 {
 .chat-message.user .message-text {
   max-width: 70%;
   font-size: 1.1rem;
-  background-color: #0a4c5a;
+  background-color: #323436;
   color: #fff;
   border-radius: 15px;
   padding: 12px;
   margin: 5px;
   animation: fadeIn 0.4s ease-in-out;
   margin-right: 400px;
-}
-
-.similar-question-button {
-  background-color: #99e3ca;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px 0;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: background-color 0.3s;
-  animation: fadeIn 0.4s ease-in-out;
-  display: block;
-  text-align: center;
-  margin-right: 400px;
-}
-
-.similar-question-button:hover {
-  background-color: #086b55;
 }
 
 .api-toggle-buttons-container {
@@ -206,11 +162,10 @@ h1 {
   flex-direction: row;
   margin-right: 10px;
   margin-top: 3%;
-  /* height: 100%; */
 }
 
 .api-toggle-button {
-  background-color: #0a4c5a;
+  background-color: #323436;
   color: white;
   border: none;
   width: 20%;
@@ -223,20 +178,13 @@ h1 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 768px) {
-  /* Adjust the max-width as needed for your mobile breakpoint */
-  .api-toggle-button {
-    padding: 2px 4px;
-  }
-}
-
 .api-toggle-button.active {
   background-color: white;
   color: #0a4c5a;
 }
 
 .api-toggle-button:hover {
-  background-color: #0f3138;
+  background-color: rgba(255, 255, 255, 0.68);
 }
 
 .chat-input-form {
@@ -254,19 +202,14 @@ h1 {
   height: fit-content;
 }
 
-@media (max-width: 900px) {
-  .chat-input-form {
-    width: 90%;
-  }
-}
-
 .chat-input {
   flex: 1;
-  background-color: #f1f1f1;
+  background-color: #323436;
   padding: 16px 24px;
   border: none;
   border-radius: 30px;
   font-size: 1.2rem;
+  color: white;
   outline: none;
   height: 80px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -275,7 +218,7 @@ h1 {
 }
 
 .send-button {
-  background-color: #0a4c5a;
+  background-color: #323436;
   border: none;
   color: white;
   border-radius: 50%;
@@ -292,13 +235,13 @@ h1 {
 }
 
 .send-button:hover {
-  background-color: #053b2f;
+  background-color: rgba(255, 255, 255, 0.68);
   transform: scale(1.05);
 }
 
 .microphone-button {
   border: none;
-  background: #0a4c5a;
+  background: #323436;
   border-radius: 50%;
   transform: scale(1.05);
   width: 45px;
@@ -313,7 +256,7 @@ h1 {
 }
 
 .microphone-button:hover {
-  background-color: #053b2f;
+  background-color: rgba(255, 255, 255, 0.68);
   transform: scale(1.05);
 }
 
@@ -323,9 +266,8 @@ h1 {
 }
 
 .footer {
-  margin-top: 20px;
   position: fixed;
-  bottom: -0.8%;
+  bottom: -4px;
   width: 100%;
   color: #ffffff;
   text-align: center;
@@ -343,7 +285,7 @@ h1 {
 }
 
 .social-icons a:hover {
-  color: #007057;
+  color: #FFFFFFAD;
 }
 
 .current-date {
@@ -351,7 +293,7 @@ h1 {
   top: 20px;
   right: 20px;
   color: white;
-  background-color: #0a4c5a;
+  background-color: #323436;
   padding: 8px 16px;
   border-radius: 20px;
   font-weight: bold;
@@ -365,37 +307,37 @@ h1 {
 .collapsible-button {
   display: block;
   width: 100%;
-  max-width: 600px; /* ????? ??? ???? */
-  padding: 15px; /* ????? ????? ???? ???? */
-  font-size: 18px; /* ????? ??? ???? */
-  text-align: right; /* ??? ???? ???? ?? ?????? */
+  max-width: 600px;
+  padding: 15px;
+  font-size: 18px;
+  text-align: right;
   color: white;
-  background-color: #156d7c;
+  background-color: #323436;
   border: none;
-  border-radius: 10px; /* ??? ?????? ???? ??????? */
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-bottom: 10px; /* ????? ??????? ??? ??????? */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ????? ?? ??????? */
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .collapsible-button:hover {
-  background-color: #0a4c5a;
-  transform: scale(1.02); /* ????? ????? ??????? ??? ??????? */
+  background-color: #FFFFFFAD;
+  transform: scale(1.02);
 }
 
 .collapsible-content {
-  padding: 15px; /* ????? ????? ????? */
-  background-color: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 10px; /* ??? ?????? ???? ??????? */
-  margin-top: 10px; /* ????? ??????? ??? ????? ????? */
-  font-size: 16px; /* ????? ???? ????? */
-  color: #333;
-  line-height: 1.8; /* ????? ????? ?????? */
-  text-align: right; /* ??? ???? ???? ?? ?????? */
-  max-width: 600px; /* ??? ????? ?????? ?? ??????? */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* ????? ?? ????? */
+  padding: 15px;
+  background-color: #323436;
+  border: 1px solid #656464;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.8;
+  text-align: right;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeIn {
@@ -409,125 +351,277 @@ h1 {
   }
 }
 
-@media (max-width: 768px) {
-  .chat-container {
-    width: 90%;
-  }
-}
-
-@media (max-width: 400px) {
-  h1 {
-    font-size: 1.5rem;
-    margin-top: -30px;
-  }
-
-  .una-logo {
-    width: 300px; /* Reduce logo size */
-    top: -10px;
-  }
-
-  .chat-page {
-    flex-direction: column;
-    height: 100vh;
-    background-size: cover;
-    padding: 10px;
-  }
-
-  .chat-container {
-    width: 100%;
-    height: auto; /* Adjust height to fit the content */
-    padding: 10px;
-    margin-top: 20px;
-    overflow-y: scroll;
-  }
-
-  .chat-header {
-    top: 10px;
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  .chat-messages {
-    flex: 1;
-    padding: 10px;
-    gap: 5px; /* Reduce gap between messages */
-  }
-
-  .chat-message .message-text {
-    font-size: 0.9rem; /* Adjust font size for readability */
-    padding: 8px;
-    margin: 5px 10px;
-    max-width: 80%; /* Ensure messages fit smaller screens */
-  }
-
-  .chat-message.bot .message-text {
-    margin-right: 0; /* Align properly for small screens */
-  }
-
-  .chat-message.user .message-text {
-    margin-right: 0; /* Align properly for small screens */
-  }
-
-  .similar-question-button {
-    font-size: 0.9rem; /* Adjust button size */
-    padding: 8px 10px;
-    margin-right: 0; /* Remove extra margin for buttons */
-  }
-
-  .chat-input-form {
-    flex-direction: column; /* Stack input and buttons vertically */
-    bottom: 10px; /* Position properly for small screens */
-    left: 5%; /* Adjust alignment */
-    width: 90%; /* Reduce width */
-  }
-
-  .chat-input {
-    height: 50px; /* Reduce height */
-    font-size: 1rem; /* Adjust font size */
-    padding: 8px 12px;
-  }
-
-  .send-button,
-  .microphone-button {
-    width: 35px; /* Smaller buttons */
-    height: 35px;
-    font-size: 1.2rem; /* Adjust icon size */
-    margin: 5px 0;
-  }
-
-  .una-news-button {
-    font-size: 0.9rem; /* Adjust button font size */
-    height: 40px; /* Reduce button height */
-  }
-
-  .robot-container {
-    display: none; /* Hide robot animation on small screens */
-  }
-
-  .footer {
-    font-size: 0.6rem; /* Adjust footer text size */
-    padding: 10px 0;
-  }
-
-  .social-icons a {
-    font-size: 20px; /* Reduce icon size */
-    margin: 0 5px;
-  }
-
-  .current-date {
-    font-size: 0.8rem; /* Reduce size of the date container */
-    padding: 5px 10px;
-    right: 10px; /* Adjust positioning */
-    top: 10px;
-  }
-}
-
-@media (max-width: 1000px) {
-  .robot-container {
-    display: none;
-  }
-}
 .form-question-container {
   display: flex;
   align-items: center;
 }
+
+/* Media queries for responsiveness */
+@media (max-width: 1024px) {
+  .chat-container {
+    width: 85%;
+  }
+
+  .chat-input-form {
+    width: 85%;
+  }
+  .robot-container {
+    position: absolute;
+    top: 2%;
+    right: 23%;
+    width: 7%;
+    height: 14%;
+    animation: upDown 2s ease-in-out infinite;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .chat-container {
+    width: 90%;
+  }
+
+  .chat-input-form {
+    width: 90%;
+  }
+
+  .chat-message.bot .message-text,
+
+  .chat-message.user .message-text {
+    max-width: 70%;
+    margin-right: 120px;
+  }
+
+  .una-logo {
+    width: 350px;
+  }
+
+  .current-date {
+    top: 85px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .robot-container {
+    position: absolute;
+    top: 2%;
+    right: 18%;
+    width: 10%;
+    height: 14%;
+    animation: upDown 2s ease-in-out infinite;
+  }
+
+  .api-toggle-button {
+    width: 45%;
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  .form-question-container {
+    display: flex;
+    align-items: center;
+    margin-top: 100px; /* ?? ?? ???? ?????? */
+  }
+
+}
+
+@media (max-width: 480px) {
+  .una-logo {
+    width: 300px;
+  }
+
+  .current-date {
+    top: 80px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .chat-container {
+    width: 100%;
+  }
+
+  .chat-input-form {
+    width: 100%;
+  }
+
+  .chat-message.bot .message-text,
+  .chat-message.user .message-text {
+    max-width: 90%;
+    margin-right: 0;
+    margin-bottom: -15px; /* ????? ??????? ??? ??????? */
+  }
+
+  .send-button,
+  .microphone-button {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .footer {
+    font-size: 0.7rem;
+  }
+
+  .social-icons a {
+    font-size: 20px;
+    margin: 0 5px;
+  }
+
+  .collapsible-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .collapsible-content {
+    font-size: 0.8rem;
+    padding: 10px;
+  }
+
+  .api-toggle-button {
+    width: 100%;
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .robot-container {
+    display: none;
+  }
+
+  .api-toggle-buttons-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .api-toggle-button {
+    width: 100%;
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .form-question-container {
+    display: flex;
+    align-items: center;
+    margin-top: 100px; /* ?? ?? ???? ?????? */
+  }
+}
+
+@media (max-width: 400px) {
+
+  .chat-container {
+    width: 100%;
+  }
+
+  .chat-input-form {
+    width: 100%;
+  }
+
+  .chat-message {
+    margin-bottom: 5px; /* Reduce the margin between messages */
+  }
+
+  .chat-message.bot .message-text,
+  .chat-message.user .message-text {
+    max-width: 100%;
+    font-size: 1rem;
+    margin-right: 0;
+  }
+
+  .send-button,
+
+  .microphone-button {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .form-question-container {
+      display: flex;
+      align-items: center;
+      margin-top: 100px; /* ?? ?? ???? ?????? */
+  }
+
+  .footer {
+    font-size: 0.6rem;
+  }
+
+  .social-icons a {
+    font-size: 18px;
+    margin: 0 3px;
+  }
+
+  .collapsible-button {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .collapsible-content {
+    font-size: 0.7rem;
+    padding: 8px;
+  }
+
+  .una-logo {
+    width: 300px;
+  }
+
+  .current-date {
+    top: 70px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .robot-container {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 7%;
+    height: 14%;
+    animation: upDown 2s ease-in-out infinite;
+  }
+
+}
+
+@media (max-width: 320px) {
+  .una-logo {
+    width: 200px;
+  }
+
+  .chat-message.bot .message-text,
+  .chat-message.user .message-text {
+    max-width: 100%;
+    margin-right: 0;
+  }
+
+  .send-button,
+  .microphone-button {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .footer {
+    font-size: 0.6rem;
+  }
+
+  .social-icons a {
+    font-size: 18px;
+    margin: 0 3px;
+  }
+
+  .current-date {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .collapsible-button {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .collapsible-content {
+    font-size: 0.7rem;
+    padding: 8px;
+  }
+}
+
+
