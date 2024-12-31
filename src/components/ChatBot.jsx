@@ -80,7 +80,7 @@ const ChatPage = () => {
                        target="_blank" 
                        rel="noopener noreferrer" 
                        style="
-                          background-color: #0a4c5a; 
+                          background-color: #323436; 
                           color: white; 
                           padding: 8px 16px; 
                           text-decoration: none; 
@@ -89,7 +89,7 @@ const ChatPage = () => {
                           display: inline-block; 
                           margin-top: 10px; 
                           text-align: center;">
-                       للإطلاع على المزيد من الأخبار إضغط هنا
+                       لللإطلاع على المزيد من الأخبار إضغط هنا
                     </a>
                   </div>
                 `,
@@ -107,14 +107,14 @@ const ChatPage = () => {
                 text: `
                   <div style="border: 1px solid #ddd; border-radius: 10px; overflow: hidden; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
                     ${imageHtml}
-                    <p style="color: #666; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
-                    <h3 style="font-size: 18px; color: #333; margin-top: 10px;">${answer.title}</h3>
-                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
+                    <p style="color: #ffffff; font-size: 12px; margin-top: 10px; text-align: center;">${answer.date}</p>
+                    <h3 style="font-size: 18px; color: #ffffff; margin-top: 10px;">${answer.title}</h3>
+                    <p style="color: #ffffff; font-size: 14px; line-height: 1.6; margin-top: 10px;">${answer.content}</p>
                     <a href="${answer.link}" 
                        target="_blank" 
                        rel="noopener noreferrer" 
                        style="
-                          background-color: #0a4c5a; 
+                          background-color: #323436; 
                           color: white; 
                           padding: 8px 16px; 
                           text-decoration: none; 
