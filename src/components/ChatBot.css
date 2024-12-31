@@ -451,7 +451,9 @@ body {
   .chat-container {
     width: 90%;
   }
-
+  .robot-container {
+    display: none;
+  }
   .chat-input-form {
     width: 90%;
   }
@@ -537,7 +539,9 @@ body {
   .una-logo {
     width: 200px;
   }
-
+  .robot-container {
+    display: none;
+  }
   .chat-message.bot .message-text,
   .chat-message.user .message-text {
     max-width: 100%;
