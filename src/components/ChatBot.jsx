@@ -26,7 +26,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     // Set the document title
-    document.title = "OIC BOT";
+    document.title = "UNA BOT";
 
     // Get today's date in Arabic format
     const date = new Date();
@@ -375,7 +375,7 @@ const ChatPage = () => {
             onClick={handleUnaClick}
             className={`api-toggle-button ${useUnaApi ? "active" : ""}`}
           >
-            (OIC) أسئلة من منصة
+            (UNA) أسئلة من منصة
           </button>
         </div>
         <div className="form-question-container">
