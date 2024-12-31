@@ -463,11 +463,6 @@ body {
     transform: translateX(50%);
   }
 
-  .robot-container {
-    right: 18%;
-    width: 10%;
-  }
-
   .api-toggle-button {
     width: 45%;
     font-size: 12px;
@@ -479,6 +474,11 @@ body {
 @media (max-width: 480px) {
   .una-logo {
     width: 300px;
+  }
+
+
+  .robot-container {
+    display: none;
   }
 
   .current-date {
