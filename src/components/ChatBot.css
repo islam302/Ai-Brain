@@ -139,6 +139,15 @@ body {
   visibility: hidden;
 }
 
+.message-text a {
+    color: #2e89a8; /* لون أزرق فاتح */
+    text-decoration: none; /* إزالة الخط السفلي إذا رغبت */
+}
+
+.message-text a:hover {
+    text-decoration: underline; /* إضافة خط عند التحويم */
+}
+
 .chat-message.bot .message-text:not(:empty) {
   visibility: visible;
 }

@@ -419,7 +419,7 @@ const ChatPage = () => {
               href="https://una-oic.org/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{color: "blue"}}
+              style={{color: '#2e89a8'}}
           >
             UNA.OIC.ORG
           </a>{" "}
