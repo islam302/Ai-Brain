@@ -55,8 +55,8 @@ const ChatPage = () => {
     setInput("");
 
     const apiUrl = useUnaApi
-      ? "https://unachatbot.onrender.com/ask_una/"
-      : "https://unachatbot.onrender.com/ask_questions/";
+      ? "https://unachatbot-po0f.onrender.com/ask_una/"
+      : "https://unachatbot-po0f.onrender.com/ask_questions/";
 
     try {
       console.log("Sending request to:", apiUrl);
